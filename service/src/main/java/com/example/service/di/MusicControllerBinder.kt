@@ -1,6 +1,6 @@
 package com.example.service.di
 
-import com.example.service.MusicController
+import com.example.service.controller.MusicController
 import com.example.service.service.MediaSessionController
 import dagger.Binds
 import dagger.Module

@@ -3,7 +3,7 @@ package com.example.api.useCases
 import com.example.api.response.TrackResponseDO
 import com.example.core_data.util.ButtonState
 import com.example.core_data.util.RepeatMode
-import com.example.service.MusicController
+import com.example.service.controller.MusicController
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -38,6 +38,7 @@ class GetPlayBackStateUseCase @Inject constructor(
                 hasNext = currentState.hasNext,
                 currentPositionMs = currentState.currentPositionMs,
                 totalDurationMs = currentState.totalDurationMs,
+                errorMessage = currentState.errorMessage,
                  currentQueueTrackIds = currentState.currentQueueItemsId.map { it.mediaId })
          }
 
@@ -54,7 +55,8 @@ data class PlayBackInfo(
     val repeatMode : RepeatMode = RepeatMode.REPEAT_MODE_OFF,
     val hasNext : Boolean = false,
     val totalDurationMs : Int = 0,
-    val currentPositionMs : Int = 0
+    val currentPositionMs : Int = 0,
+    val errorMessage : String?=null
 
 
 )

@@ -1,7 +1,7 @@
-package com.example.service
+package com.example.service.controller
 
-import com.example.service.model.PlaybackState
 import com.example.service.model.PlayableItem
+import com.example.service.model.PlaybackState
 import kotlinx.coroutines.flow.StateFlow
 
 interface MusicController {

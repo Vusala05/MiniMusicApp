@@ -36,12 +36,11 @@ import com.example.core_ui.components.SectionLoadingView
 import com.example.core_ui.components.TrackItem
 import com.example.core_ui.pagination.Paging
 import com.example.navigation.DeeplinkNavigator
-import com.example.navigation.Route
 
 @Composable
 fun SeeAllScreen(
-    state: SeeAllContract.State,
-    onIntent: (SeeAllContract.Intent) -> Unit
+    state: SeeAllTrackContract.State,
+    onIntent: (SeeAllTrackContract.Intent) -> Unit
 ) {
     val listState = rememberLazyListState()
 
@@ -49,7 +48,7 @@ fun SeeAllScreen(
         enabled = true,
         listState = listState,
         preFetchOffset = 3,
-        onFetch = { onIntent(SeeAllContract.Intent.LoadNextPage) },
+        onFetch = { onIntent(SeeAllTrackContract.Intent.LoadNextPage) },
         isLinearList = true
     )
 
@@ -129,15 +128,15 @@ fun SeeAllScreen(
                                 artistName = track.artistName,
                                 isChosen = state.chosenSong == track.id,
                                 onIconClick = {
-                                    onIntent(SeeAllContract.Intent.OnPlayPauseIconClick(it))
+                                    onIntent(SeeAllTrackContract.Intent.OnPlayPauseIconClick(it))
                                 },
                                 onTrackClick = {
                                     onIntent(
-                                        SeeAllContract.Intent.OnClickTrackItem(
+                                        SeeAllTrackContract.Intent.OnClickTrackItem(
                                             trackId = track.id,
-                                            route = Route.IsDeepLinkNavigator(
+                                            deeplinkNavigator =
                                                 DeeplinkNavigator.DetailMusic(argument = track.id)))
-                                    )
+
                                 }
                             )
                         }

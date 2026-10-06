@@ -120,24 +120,3 @@ fun PlayingItem(
         }
     }
 }
-
-@Preview(showBackground = true, backgroundColor = 0xFF0D0B14)
-@Composable
-fun MiniPlayerPreview() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        contentAlignment = Alignment.BottomCenter
-    ) {
-        PlayingItem(
-            imageUrl = "",
-            trackName = "Midnight Dreams",
-            artistName = "Neon Aurora",
-            isPlaying = false,
-            progress = 0.35f,
-            onPlayPauseClick = {},
-            onPlayerClick = {}
-        )
-    }
-}

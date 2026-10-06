@@ -10,12 +10,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import androidx.navigation.toRoute
+import com.example.navigation.AppRoutes
 import com.example.navigation.DeeplinkNavigator
 import com.example.navigation.Navigator
 import com.example.ui.DetailRoute
 import com.example.ui.ExploreRoute
 import com.example.ui.HomeScreen.HomeRoute
-import com.example.ui.SeeALType
 import com.example.ui.SeeAllScreen.SeeAllAlbum.SeeAllAlbumRoute
 import com.example.ui.SeeAllScreen.SeeAllTrack.SeeAllTrackRoute
 
@@ -40,10 +40,7 @@ fun  MainRoutes(
             deepLinks = listOf(
                 navDeepLink { uriPattern = DeeplinkNavigator.MusicHome.routeLink })
         ){
-            HomeRoute(
-                onNavigateSeeAllTrack = { type,tag,id ->
-                    navHostController.navigate(AppRoutes.SeeAllTrack(tag = tag, albumId =id, seeALType = type ))},
-                onNavigateSeeAllAlbum = { navHostController.navigate(AppRoutes.SeeAllAlbum(type = it))})
+            HomeRoute()
         }
 
 
@@ -68,13 +65,11 @@ fun  MainRoutes(
         ){
         }
         composable<AppRoutes.SeeAllTrack> { navStackEntry ->
-            val args = navStackEntry.toRoute<AppRoutes.SeeAllTrack>()
-            SeeAllTrackRoute(type = args.seeALType, tag = args.tag, albumId = args.albumId)
+            SeeAllTrackRoute()
         }
-        composable<AppRoutes.SeeAllAlbum> { navStackEntry ->
-            SeeAllAlbumRoute(
-                navigateTrackList = {navHostController.navigate(AppRoutes.SeeAllTrack(tag = null,albumId = it, seeALType = SeeALType.ALBUM_TRACKS))}
-            )
+
+        composable<AppRoutes.SeeAllAlbum> {
+            SeeAllAlbumRoute()
         }
 
 

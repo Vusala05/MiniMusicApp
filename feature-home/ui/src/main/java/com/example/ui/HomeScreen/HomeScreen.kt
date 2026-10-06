@@ -42,9 +42,8 @@ import com.example.core_ui.components.EmptySectionView
 import com.example.core_ui.components.SectionLayout
 import com.example.core_ui.components.SectionLoadingView
 import com.example.core_ui.components.TrackItem
+import com.example.navigation.AppRoutes
 import com.example.navigation.DeeplinkNavigator
-import com.example.navigation.Route
-import com.example.ui.SeeALType
 import com.example.ui.components.ArtistCover
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -52,10 +51,7 @@ import com.example.ui.components.ArtistCover
 @Composable
 fun HomeScreen(
     state: HomeContract.State,
-    onIntent: (HomeContract.Intent) -> Unit,
-    onNavigateSeeAllTrack : (type : SeeALType,tag : String?,trackId : String?) -> Unit,
-    onNavigateSeeAllAlbum : (tag : String?) -> Unit
-    ) {
+    onIntent: (HomeContract.Intent) -> Unit) {
     val backgroundGradient = Brush.verticalGradient(
         colors = listOf(
             Color(0xFF1E132A),
@@ -129,7 +125,7 @@ fun HomeScreen(
                 item {
                     SectionLayout(
                         title = "Popular Albums",
-                        onSeeAllClick = { onNavigateSeeAllAlbum(state.selectedTab.value)}
+                        onSeeAllClick = { onIntent(HomeContract.Intent.OnSeeALlClick(AppRoutes.SeeAllAlbum(tag = state.selectedTab.value)))}
                     ) {
                         when {
                             state.isAlbumLoading -> {
@@ -154,7 +150,7 @@ fun HomeScreen(
                                             artistTitle = album.artistName,
                                             time = album.releaseDate.year.toString(),
                                             onItemClick = {
-                                                onNavigateSeeAllTrack(SeeALType.ALBUM_TRACKS,null,it)
+                                                onIntent(HomeContract.Intent.OnSeeALlClick(AppRoutes.SeeAllTrack(tag = state.selectedTab.value, albumId = it)))
                                             }
                                         )
                                     }
@@ -167,7 +163,9 @@ fun HomeScreen(
                 item {
                     SectionLayout(
                         title = "Popular Songs",
-                        onSeeAllClick = { onNavigateSeeAllTrack(SeeALType.SEE_ALL,state.selectedTab.value,null)}
+                        onSeeAllClick = {
+                            onIntent(HomeContract.Intent.OnSeeALlClick(AppRoutes.SeeAllTrack(tag = state.selectedTab.value, albumId = null)))
+                        }
 
                     ) {
                         when {
@@ -201,10 +199,10 @@ fun HomeScreen(
                                                 onIntent(
                                                     HomeContract.Intent.OnItemClick(
                                                         trackId = track.id,
-                                                        route = Route.IsDeepLinkNavigator(
+                                                        deeplinkNavigator =
                                                             DeeplinkNavigator.DetailMusic(argument = track.id)
                                                         )
-                                                    )
+
                                                 )
                                             }
                                         )

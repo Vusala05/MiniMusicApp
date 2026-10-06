@@ -22,13 +22,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.core_ui.components.AlbumItem
 import com.example.core_ui.pagination.Paging
+import com.example.navigation.AppRoutes
+import com.example.ui.HomeScreen.HomeContract
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun SeeAllAlbumScreen(
     state: SeeAllAlbumContract.State,
     onIntent : (SeeAllAlbumContract.Intent) -> Unit,
-    onNavigateTrackList : (String) -> Unit
 ) {
     val gridState = rememberLazyGridState()
     Paging(
@@ -68,7 +69,8 @@ fun SeeAllAlbumScreen(
                             albumTitle = album.name,
                             artistTitle = album.artistName,
                             time = album.releaseDate.year.toString(),
-                            onItemClick = {onNavigateTrackList(it) }
+                            onItemClick = { onIntent(SeeAllAlbumContract.Intent.OnClickAlbum(
+                                AppRoutes.SeeAllTrack(tag = state.selectedTag,albumId = album.id)))}
                         )
                     }
                 }

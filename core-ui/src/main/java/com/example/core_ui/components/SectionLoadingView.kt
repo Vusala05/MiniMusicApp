@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 fun SectionLoadingView(
     modifier: Modifier = Modifier
 ) {
+
     Box(
         modifier = modifier
             .fillMaxWidth()

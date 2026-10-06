@@ -16,10 +16,10 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.core.content.ContextCompat
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 
 @Composable
 fun NotificationPermissionHandler() {
-    // Yalnız Android 13+ üçün lazımdır, aşağıda heç nə göstərmirik
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
 
     val context = LocalContext.current
@@ -40,20 +40,16 @@ fun NotificationPermissionHandler() {
     ) { isGranted ->
         hasPermission = isGranted
         if (!isGranted) {
-            // İstifadəçi rədd etdi. "Bir daha soruşma"-nı seçib-seçmədiyini yoxla.
             val shouldShowRationale = activity?.shouldShowRequestPermissionRationale(
                 Manifest.permission.POST_NOTIFICATIONS
             ) ?: false
 
             if (!shouldShowRationale) {
-                // Sistem bir daha izah göstərmir → istifadəçi "bir daha soruşma" seçib
-                // və ya ilk dəfə birbaşa rədd edib. Settings-ə yönləndirmə təklif et.
                 showSettingsDialog = true
             }
         }
     }
 
-    // İlk giriş: icazə yoxdursa, birbaşa sistem dialoqunu göstər
     LaunchedEffect(Unit) {
         if (!hasPermission) {
             val shouldShowRationale = activity?.shouldShowRequestPermissionRationale(
@@ -61,10 +57,8 @@ fun NotificationPermissionHandler() {
             ) ?: false
 
             if (shouldShowRationale) {
-                // İstifadəçi əvvəl bir dəfə rədd edib — əvvəlcə öz izahımızı göstərək
                 showRationaleDialog = true
             } else {
-                // İlk dəfədir — birbaşa sistem dialoqunu göstər
                 permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         }
@@ -73,25 +67,22 @@ fun NotificationPermissionHandler() {
     if (showRationaleDialog) {
         AlertDialog(
             onDismissRequest = { showRationaleDialog = false },
-            title = { Text("Bildiriş icazəsi") },
+            title = { Text(text = stringResource(R.string.notification_permission)) },
             text = {
-                Text(
-                    "Çalınan mahnını idarə etmək (play/pause, next) üçün " +
-                            "bildiriş icazəsi lazımdır. İcazə versəniz, mahnı bildiriş " +
-                            "panelindən idarə oluna biləcək."
-                )
+                Text(text = stringResource( R.string.notification_needed))
             },
             confirmButton = {
                 TextButton(onClick = {
                     showRationaleDialog = false
                     permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }) {
-                    Text("İcazə ver")
+                    Text(text = stringResource(R.string.allow))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showRationaleDialog = false }) {
-                    Text("İndi yox")
+                    Text(text = stringResource(R.string.not_now))
+
                 }
             }
         )
@@ -100,12 +91,11 @@ fun NotificationPermissionHandler() {
     if (showSettingsDialog) {
         AlertDialog(
             onDismissRequest = { showSettingsDialog = false },
-            title = { Text("Bildiriş icazəsi bağlıdır") },
+            title = {  Text(text = stringResource(R.string.notification_disabled))
+            },
             text = {
-                Text(
-                    "Bildiriş icazəsini əvvəllər rədd etmisiniz. Musiqi idarəetməsini " +
-                            "bildirişdən istifadə etmək üçün Ayarlar-dan icazəni aça bilərsiniz."
-                )
+                Text(text = stringResource(R.string.denied_notification))
+
             },
             confirmButton = {
                 TextButton(onClick = {
@@ -115,12 +105,13 @@ fun NotificationPermissionHandler() {
                     }
                     context.startActivity(intent)
                 }) {
-                    Text("Ayarlara get")
+                    Text(text = stringResource(R.string.go_to_settings))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showSettingsDialog = false }) {
-                    Text("Ləğv et")
+                    Text(text = stringResource(R.string.cancel))
+
                 }
             }
         )

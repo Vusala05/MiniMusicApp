@@ -1,14 +1,16 @@
 package com.example.musicapplication
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.navigation.compose.rememberNavController
 import com.example.core_ui.NotificationPermissionHandler
 import com.example.musicapplication.ui.theme.MusicApplicationTheme
 import com.example.navigation.Navigator
-import com.example.service.MusicController
+import com.example.service.controller.MusicController
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -20,6 +22,7 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var navigator: Navigator
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

@@ -25,12 +25,12 @@ class Navigator @Inject constructor() {
         }
 
     }
-    fun Navigator.navigatorDeepLink (route : Route, block : NavController.(destination : Uri )-> Unit){
-        val result =  when(route){
-            is Route.IsDeepLinkNavigator -> navDeepLink(route.routeLink)
-        }
+    fun Navigator.navigatorDeepLink (deeplinkNavigator: DeeplinkNavigator, block : NavController.(destination : Uri )-> Unit){
+
+           val result = navDeepLink(deeplinkNavigator)
         navController?.block(result)
     }
-     fun Navigator.navigation(block : NavController.() -> Unit){
+
+     fun Navigator.navigatorRoute(block : NavController.() -> Unit){
          navController?.block()
      }

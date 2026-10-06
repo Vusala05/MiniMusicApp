@@ -19,10 +19,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -34,16 +31,13 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
-import com.example.musicapplication.navigation.AppRoutes
 import com.example.musicapplication.navigation.BottomSheetNavigation
 import com.example.musicapplication.navigation.MainRoutes
+import com.example.navigation.AppRoutes
 import com.example.navigation.Navigator
-import javax.inject.Inject
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -112,7 +106,6 @@ fun App(navController : NavHostController, navigator : Navigator) {
                                 label = "IndicatorColor"
                             )
 
-                            // Hər bir Navigation Item
                             Box(
                                 modifier = Modifier
                                     .height(44.dp)

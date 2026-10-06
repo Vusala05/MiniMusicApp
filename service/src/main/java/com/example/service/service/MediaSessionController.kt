@@ -14,7 +14,7 @@ import androidx.media3.session.SessionToken
 import androidx.media3.ui.compose.material3.Player
 import com.example.core_data.util.ButtonState
 import com.example.core_data.util.RepeatMode
-import com.example.service.MusicController
+import com.example.service.controller.MusicController
 import com.example.service.model.PlayableItem
 import com.example.service.model.PlaybackState
 import com.google.common.util.concurrent.ListenableFuture
@@ -243,8 +243,15 @@ class MediaSessionController @Inject constructor(
     private fun PlaybackException.toMessage(): String = when (errorCode) {
         PlaybackException.ERROR_CODE_IO_NETWORK_CONNECTION_FAILED,
         PlaybackException.ERROR_CODE_IO_NETWORK_CONNECTION_TIMEOUT,
-        PlaybackException.ERROR_CODE_TIMEOUT -> "Connect To Internet"
-        else -> "Unknown Error"
+        PlaybackException.ERROR_CODE_TIMEOUT -> "Connect to internet"
+
+        PlaybackException.ERROR_CODE_IO_BAD_HTTP_STATUS,
+        PlaybackException.ERROR_CODE_IO_FILE_NOT_FOUND -> "Track is unavailable"
+
+        PlaybackException.ERROR_CODE_DECODING_FAILED,
+        PlaybackException.ERROR_CODE_PARSING_CONTAINER_MALFORMED -> "This track can't be played"
+
+        else -> "Playback error"
     }
 
 

@@ -1,6 +1,7 @@
 package com.example.musicapplication.navigation
 
 import com.example.core_ui.R
+import com.example.navigation.AppRoutes
 
 data class BottomSheetNavigation(
     val route: AppRoutes,

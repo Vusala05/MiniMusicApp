@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notification_permission">Notification Permission</string>
+    <string name="allow">Allow</string>
+    <string name="not_now">Not now</string>
+    <string name="notification_needed">Notification permission is required to control playback (play/pause, next). Granting permission will allow you to manage music directly from the notification panel.</string>
+    <string name="notification_disabled">Notification Permission Disabled</string>
+    <string name="denied_notification">You have previously denied the notification permission. To manage music controls from notifications, please enable it in Settings.</string>
+    <string name="go_to_settings">Go to Settings</string>
+    <string name="cancel">Cancel</string>
+
+
+
+</resources>

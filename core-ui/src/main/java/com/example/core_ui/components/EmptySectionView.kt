@@ -17,6 +17,7 @@ fun EmptySectionView(
     message: String = "No content available",
     modifier: Modifier = Modifier
 ) {
+
     Box(
         modifier = modifier
             .fillMaxWidth()

@@ -10,14 +10,13 @@ import com.example.api.useCases.PrepareQueueUseCase
 import com.example.core_data.model.ResultWrapper
 import com.example.core_data.useCases.HandleErrorUseCase
 import com.example.core_ui.model.BaseViewModel
+import com.example.navigation.AppRoutes
+import com.example.navigation.DeeplinkNavigator
 import com.example.navigation.Navigator
-import com.example.navigation.Route
-import com.example.navigation.navigation
 import com.example.navigation.navigatorDeepLink
-import com.example.service.MusicController
+import com.example.navigation.navigatorRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -46,13 +45,16 @@ class HomeViewModel @Inject constructor(
         when(intent){
             is HomeContract.Intent.OnItemClick -> {
                 prepareQueue(intent.trackId)
-                handleDeepLinkNavigation(intent.route)
+                handleDeepLinkNavigation(intent.deeplinkNavigator)
             }
             is HomeContract.Intent.OnClickTab -> {
               updateUiState { it.copy(selectedTab = intent.tag) }
             }
             is HomeContract.Intent.OnPausePlayIconClick -> {
                onPlayPauseClicked(intent.id)
+            }
+            is HomeContract.Intent.OnSeeALlClick -> {
+                handleRouteNavigation(intent.appRoutes)
             }
 
         }
@@ -66,6 +68,10 @@ class HomeViewModel @Inject constructor(
                     chosenSong = playbackInfo.chosenSong,
                     currentQueueTrackIds = playbackInfo.currentQueueTrackIds,
                     playPauseBtnState = playbackInfo.btnState) }
+
+                playbackInfo.errorMessage?.let {
+                    sendEffect(HomeContract.Effect.SendMessage(it))
+                }
             }
         }
 
@@ -116,7 +122,7 @@ class HomeViewModel @Inject constructor(
                     updateUiState { it.copy(trackList = res.data, isTrackLoading = false) }
                 }
                 is ResultWrapper.Error ->{
-                    updateUiState { it.copy(isTrackLoading = true) }
+                    updateUiState { it.copy(isTrackLoading = false) }
                     sendEffect(HomeContract.Effect.SendMessage(handleErrorUseCase(res.appError)))
                 }
             }
@@ -149,10 +155,15 @@ class HomeViewModel @Inject constructor(
         }
 
     }
-    private fun handleDeepLinkNavigation(route: Route){
-     navigator.navigatorDeepLink(route){
+    private fun handleDeepLinkNavigation(deeplinkNavigator: DeeplinkNavigator){
+     navigator.navigatorDeepLink(deeplinkNavigator){
       navigate(it)
      }
+    }
+    private fun handleRouteNavigation(appRoutes: AppRoutes){
+        navigator.navigatorRoute {
+            navigate(appRoutes)
+        }
     }
 
 

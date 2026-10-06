@@ -13,9 +13,8 @@ import kotlinx.coroutines.flow.collectLatest
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun SeeAllAlbumRoute(
-    navigateTrackList : (String)-> Unit
-){
+fun SeeAllAlbumRoute(){
+
     val viewModel : SeeAllAlbumViewModel = hiltViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
     val effect = viewModel.effect
@@ -23,9 +22,8 @@ fun SeeAllAlbumRoute(
    SeeAllAlbumScreen(
        state = state,
        onIntent = viewModel::handleIntent
-   ) {
-       navigateTrackList(it)
-   }
+   )
+
 
 
     LaunchedEffect(effect) {

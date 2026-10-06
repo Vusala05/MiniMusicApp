@@ -9,17 +9,17 @@ import com.example.api.useCases.PrepareQueueUseCase
 import com.example.core_data.useCases.HandleErrorUseCase
 import com.example.core_ui.model.BaseViewModel
 import com.example.core_ui.pagination.PaginationHandler
+import com.example.navigation.DeeplinkNavigator
 import com.example.navigation.Navigator
-import com.example.navigation.Route
 import com.example.navigation.navigatorDeepLink
-import com.example.service.MusicController
-import com.example.ui.SeeALType
+import com.example.service.controller.MusicController
+import com.example.ui.HomeScreen.HomeContract
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SeeAllTracksViewModel @Inject constructor(
+class SeeAllTrackViewModel @Inject constructor(
     val getTracksUseCase: GetTracksUseCase,
     val getPlayBackStateUseCase: GetPlayBackStateUseCase,
     val playPauseClickedUseCase: PlayPauseClickedUseCase,
@@ -29,20 +29,19 @@ class SeeAllTracksViewModel @Inject constructor(
     val navigator: Navigator,
     val musicController: MusicController,
     savedStateHandle: SavedStateHandle
-): BaseViewModel<SeeAllContract.State, SeeAllContract.Effect>(
-initialState = SeeAllContract.State()
+): BaseViewModel<SeeAllTrackContract.State, SeeAllTrackContract.Effect>(
+initialState = SeeAllTrackContract.State()
 ) {
-    private val type: SeeALType? = savedStateHandle["seeALType"]
     private val tag: String? = savedStateHandle["tag"]
     private val albumId: String? = savedStateHandle["albumId"]
 
     val paginationHandler = PaginationHandler(
         coroutineScope = viewModelScope,
         onGetData = { offset ->
-           if(type == SeeALType.SEE_ALL) getTracksUseCase(offset = offset, tag = tag)
-            else  getAlbumTrackUseCase(albumId = albumId?:"",offset = offset)
+           if(albumId!=null) getAlbumTrackUseCase(offset = offset, albumId = albumId)
+            else  getTracksUseCase(tag = tag,offset = offset)
          },
-        onError = { appError -> sendEffect(SeeAllContract.Effect.ShowMessage(handleErrorUseCase(appError))) },
+        onError = { appError -> sendEffect(SeeAllTrackContract.Effect.ShowMessage(handleErrorUseCase(appError))) },
         onLoadedNewDataList = { dataList -> musicController.appendToQueue(dataList) }
     )
 
@@ -55,21 +54,22 @@ initialState = SeeAllContract.State()
     }
 
 
-    fun handleIntent(intent: SeeAllContract.Intent) {
+    fun handleIntent(intent: SeeAllTrackContract.Intent) {
         when(intent){
-            is SeeAllContract.Intent.OnPlayPauseIconClick -> {
+            is SeeAllTrackContract.Intent.OnPlayPauseIconClick -> {
                 onPlayPauseClicked(intent.trackId)
             }
-            is SeeAllContract.Intent.LoadNextPage -> {
+            is SeeAllTrackContract.Intent.LoadNextPage -> {
                 viewModelScope.launch {
                     paginationHandler.loadNextPage()
                 }
 
             }
-            is SeeAllContract.Intent.OnClickTrackItem -> {
+            is SeeAllTrackContract.Intent.OnClickTrackItem -> {
                 prepareQueue(intent.trackId)
-                handleDeepLinkNavigation(intent.route)
+                handleDeepLinkNavigation(intent.deeplinkNavigator)
             }
+
 
         }
     }
@@ -101,7 +101,12 @@ initialState = SeeAllContract.State()
                   chosenSong = playBackState.chosenSong,
                   currentQueueTrackIds = playBackState.currentQueueTrackIds,
                   playPauseBtnState = playBackState.btnState)}
+
+                playBackState.errorMessage?.let {
+                    sendEffect(SeeAllTrackContract.Effect.ShowMessage(it))
+                }
             }
+
         }
 
     }
@@ -114,8 +119,8 @@ initialState = SeeAllContract.State()
 
     }
 
-    private fun handleDeepLinkNavigation(route: Route){
-        navigator.navigatorDeepLink(route){
+    private fun handleDeepLinkNavigation(deeplinkNavigator: DeeplinkNavigator){
+        navigator.navigatorDeepLink(deeplinkNavigator){
             navigate(it)
         }
     }

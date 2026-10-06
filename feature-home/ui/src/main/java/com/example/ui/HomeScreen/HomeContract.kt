@@ -5,7 +5,8 @@ import com.example.api.response.ArtistResponseDO
 import com.example.api.response.TrackResponseDO
 import com.example.api.util.Tag
 import com.example.core_data.util.ButtonState
-import com.example.navigation.Route
+import com.example.navigation.AppRoutes
+import com.example.navigation.DeeplinkNavigator
 import com.example.service.model.PlaybackState
 
 sealed interface HomeContract {
@@ -15,9 +16,10 @@ sealed interface HomeContract {
     }
 
     sealed interface Intent {
-        class OnItemClick(val route: Route, val trackId : String) : Intent
+        class OnItemClick(val deeplinkNavigator: DeeplinkNavigator, val trackId : String) : Intent
         class OnClickTab(val tag: Tag) : Intent
         class OnPausePlayIconClick(val id : String) : Intent
+        class OnSeeALlClick(val appRoutes: AppRoutes) : Intent
     }
 
     data class State(

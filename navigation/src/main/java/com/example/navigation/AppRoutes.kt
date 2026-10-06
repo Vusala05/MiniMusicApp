@@ -1,8 +1,7 @@
-package com.example.musicapplication.navigation
+package com.example.navigation
 
 import kotlinx.serialization.Serializable
 
-/*
 sealed interface AppRoutes {
 
     @Serializable
@@ -15,9 +14,9 @@ sealed interface AppRoutes {
     data object Saved : AppRoutes
 
     @Serializable
-    data class SeeAllTrack(val tag : String?, val albumId : String?, val seeALType: SeeALType): AppRoutes
+    data class SeeAllTrack(val tag : String?, val albumId : String?): AppRoutes
     @Serializable
-    data class SeeAllAlbum(val type : String?=null): AppRoutes
+    data class SeeAllAlbum(val tag : String?=null): AppRoutes
     @Serializable
     data class Detail (val id : String ) : AppRoutes
-}*/
+}

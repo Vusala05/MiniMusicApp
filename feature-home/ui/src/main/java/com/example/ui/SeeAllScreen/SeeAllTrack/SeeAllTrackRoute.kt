@@ -7,17 +7,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.ui.HomeScreen.HomeContract
-import com.example.ui.SeeALType
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun SeeAllTrackRoute(
-     type : SeeALType,
-     tag : String?=null,
-     albumId : String?=null
-){
-     val viewModel : SeeAllTracksViewModel = hiltViewModel()
+fun SeeAllTrackRoute(){
+
+     val viewModel : SeeAllTrackViewModel = hiltViewModel()
      val state by viewModel.state.collectAsStateWithLifecycle()
      val effect = viewModel.effect
      val context = LocalContext.current
@@ -28,7 +23,7 @@ fun SeeAllTrackRoute(
      LaunchedEffect(effect) {
           effect.collectLatest {
                when(it){
-                    is SeeAllContract.Effect.ShowMessage -> {
+                    is SeeAllTrackContract.Effect.ShowMessage -> {
                          Toast.makeText(context,it.message, Toast.LENGTH_SHORT).show()
 
                     }

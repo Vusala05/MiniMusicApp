@@ -6,13 +6,4 @@ import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
 @HiltAndroidApp
-class MyApp : Application() {
-@Inject
-lateinit var mediaSessionController : MediaSessionController
-    override fun onCreate() {
-        super.onCreate()
-            //mediaSessionController.bind()
-
-
-    }
-}
+class MyApp : Application()

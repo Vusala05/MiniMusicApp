@@ -19,6 +19,7 @@ fun SectionLayout(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
+
     Column(
         modifier = modifier
             .fillMaxWidth()
