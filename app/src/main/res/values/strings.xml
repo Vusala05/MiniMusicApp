@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MusicApplication</string>
+    <string name="home">Home</string>
+    <string name="explore">Explore</string>
+    <string name="saved">Saved</string>
+
+</resources>

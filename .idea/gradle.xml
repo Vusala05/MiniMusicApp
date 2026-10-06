@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="testRunner" value="CHOOSE_PER_TEST" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/core-data" />
+            <option value="$PROJECT_DIR$/core-sync" />
+            <option value="$PROJECT_DIR$/core-ui" />
+            <option value="$PROJECT_DIR$/feature-detail" />
+            <option value="$PROJECT_DIR$/feature-detail/api" />
+            <option value="$PROJECT_DIR$/feature-detail/impl" />
+            <option value="$PROJECT_DIR$/feature-detail/ui" />
+            <option value="$PROJECT_DIR$/feature-explore" />
+            <option value="$PROJECT_DIR$/feature-explore/api" />
+            <option value="$PROJECT_DIR$/feature-explore/impl" />
+            <option value="$PROJECT_DIR$/feature-explore/ui" />
+            <option value="$PROJECT_DIR$/feature-home" />
+            <option value="$PROJECT_DIR$/feature-home/api" />
+            <option value="$PROJECT_DIR$/feature-home/impl" />
+            <option value="$PROJECT_DIR$/feature-home/ui" />
+            <option value="$PROJECT_DIR$/feature-saved" />
+            <option value="$PROJECT_DIR$/feature-saved/api" />
+            <option value="$PROJECT_DIR$/feature-saved/impl" />
+            <option value="$PROJECT_DIR$/feature-saved/ui" />
+            <option value="$PROJECT_DIR$/navigation" />
+            <option value="$PROJECT_DIR$/service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>
