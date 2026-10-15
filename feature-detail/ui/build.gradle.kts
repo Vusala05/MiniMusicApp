@@ -63,7 +63,10 @@ dependencies {
     implementation(project(":core-ui"))
     implementation(project(":feature-detail:api"))
     implementation(project(":feature-home:api"))
+    implementation(project(":feature-download:api"))
     implementation(project(":service"))
+    implementation(project(":core-sync"))
+
 
 
 }

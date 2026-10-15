@@ -1,6 +1,6 @@
 package com.example.api.response
 
-import com.example.service.model.PlayableItem
+import com.example.core_data.model.PlayableItem
 
 data class TrackResponseDO(
     override val id: String,
@@ -10,6 +10,8 @@ data class TrackResponseDO(
     override val artistName: String,
     override val image: String,
     override val audio : String,
+    val audioDownload: String?=null,
+    val allowedDownloadAudio : Boolean,
     val instruments: List<String>
 ) : PlayableItem
 

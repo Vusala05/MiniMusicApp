@@ -1,7 +1,7 @@
 package com.example.api.useCases
 
-import com.example.api.response.TrackResponseDO
 import com.example.service.controller.MusicController
+import com.example.core_data.model.PlayableItem
 import javax.inject.Inject
 
 class PlayPauseClickedUseCase @Inject constructor(
@@ -9,7 +9,7 @@ class PlayPauseClickedUseCase @Inject constructor(
 ) {
     operator fun invoke(
         currentQueueTrackIds: List<String>,
-        currentTrackList: List<TrackResponseDO>,
+        currentTrackList: List<PlayableItem>,
         currentChosenSong: String?,
         trackId: String
     ) {

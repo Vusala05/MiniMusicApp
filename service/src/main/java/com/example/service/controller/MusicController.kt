@@ -1,6 +1,6 @@
 package com.example.service.controller
 
-import com.example.service.model.PlayableItem
+import com.example.core_data.model.PlayableItem
 import com.example.service.model.PlaybackState
 import kotlinx.coroutines.flow.StateFlow
 

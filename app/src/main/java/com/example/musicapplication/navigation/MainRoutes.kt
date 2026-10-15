@@ -16,6 +16,7 @@ import com.example.navigation.Navigator
 import com.example.ui.DetailRoute
 import com.example.ui.ExploreRoute
 import com.example.ui.HomeScreen.HomeRoute
+import com.example.ui.SavedRoute
 import com.example.ui.SeeAllScreen.SeeAllAlbum.SeeAllAlbumRoute
 import com.example.ui.SeeAllScreen.SeeAllTrack.SeeAllTrackRoute
 
@@ -63,6 +64,7 @@ fun  MainRoutes(
             deepLinks = listOf(
                 navDeepLink { uriPattern = DeeplinkNavigator.SavedMusic.routeLink })
         ){
+            SavedRoute()
         }
         composable<AppRoutes.SeeAllTrack> { navStackEntry ->
             SeeAllTrackRoute()

@@ -2,6 +2,7 @@ package com.example.service.service
 
 import android.content.ComponentName
 import android.content.Context
+import android.net.Uri
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.media3.common.C
@@ -11,11 +12,11 @@ import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
-import androidx.media3.ui.compose.material3.Player
 import com.example.core_data.util.ButtonState
 import com.example.core_data.util.RepeatMode
+import com.example.core_sync.data.DownloadFileManager
 import com.example.service.controller.MusicController
-import com.example.service.model.PlayableItem
+import com.example.core_data.model.PlayableItem
 import com.example.service.model.PlaybackState
 import com.google.common.util.concurrent.ListenableFuture
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -37,7 +38,8 @@ import kotlin.collections.map
 
 @Singleton
 class MediaSessionController @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    val fileManager: DownloadFileManager
 ) : MusicController, Player.Listener {
 
     private val _playbackState = MutableStateFlow(PlaybackState())
@@ -256,9 +258,11 @@ class MediaSessionController @Inject constructor(
 
 
     private fun<T : PlayableItem> List<T>.toMediaItems(): List<MediaItem> = this.map{ item ->
+       val file = fileManager.readyFilePath(item.id)
+        val uri= if(file.exists()) file.toUri() else item.audio.toUri()
         MediaItem.Builder()
             .setMediaId(item.id)
-            .setUri(item.audio)
+            .setUri(uri)
             .setMediaMetadata(
                 MediaMetadata.Builder()
                     .setArtist(item.artistName)

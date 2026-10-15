@@ -1,6 +1,7 @@
 package com.example.ui.HomeScreen
 
 import androidx.lifecycle.viewModelScope
+import com.example.api.response.TrackResponseDO
 import com.example.api.useCases.GetAlbumsUseCase
 import com.example.api.useCases.GetArtistUseCase
 import com.example.api.useCases.GetPlayBackStateUseCase

@@ -45,7 +45,7 @@ class HomeRepositoryImpl @Inject constructor(
     override suspend fun getTrackById(id: String): ResultWrapper<TrackResponseDO> {
         return handleResultWrapper(result = apiCallingHandler(globalNetworkHandler = globalNetworkHandler,
             apiCalling ={ dataSource.getSongById(id = id) } ), transform = { result ->
-            result?.firstOrNull()?.toUiModel() ?: TrackResponseDO("","",0,"","","","",emptyList())
+            result?.firstOrNull()?.toUiModel() ?: TrackResponseDO("","",0,"","","","","",false,emptyList())
         })
     }
 

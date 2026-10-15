@@ -18,6 +18,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.core_data.util.DownloadingStatus
 import com.example.core_ui.R
 
 @Composable
@@ -25,6 +26,7 @@ fun TrackInfoAndActions(
     title: String,
     artist: String,
     onDownloadClick: () -> Unit,
+    downloadingStatus: DownloadingStatus,
     onLyricsClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -64,29 +66,46 @@ fun TrackInfoAndActions(
         ) {
 
             Spacer(modifier = Modifier.width(12.dp))
-
-            Button(
+            if (downloadingStatus != DownloadingStatus.Hidden) {
+                Button(
                 onClick = onDownloadClick,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF522382)
                 ),
                 shape = RoundedCornerShape(22.dp),
                 contentPadding = PaddingValues(horizontal = 20.dp, vertical = 10.dp)
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.download),
-                    contentDescription = "Download",
-                    tint = Color.White,
-                    modifier = Modifier.size(18.dp)
-                )
-                Spacer(modifier = Modifier.width(6.dp))
-                Text(
-                    text = "Download",
-                    color = Color.White,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 14.sp
-                )
+            ){
+                when (downloadingStatus) {
+                    is DownloadingStatus.InProgress -> {
+                        val downloadingProgress = downloadingStatus.progress
+                        if (downloadingProgress != null) {
+                            CircularProgressIndicator(
+                                progress = { downloadingProgress / 100f },
+                                modifier = Modifier.size(18.dp),
+                                color = Color.White, strokeWidth = 2.dp
+                            )
+                        } else {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(18.dp),
+                                color = Color.White, strokeWidth = 2.dp
+                            )
+                        }
+                        Spacer(Modifier.width(6.dp))
+                        Text(downloadingProgress?.let { "$it% · Cancel" } ?: "Queued · Cancel")
+                    }
+                    DownloadingStatus.Completed -> {
+                        Icon(painterResource(R.drawable.download), "Downloaded", Modifier.size(18.dp), Color.White)
+                        Spacer(Modifier.width(6.dp))
+                        Text("Downloaded")
+                    }
+                    else -> {
+                        Icon(painterResource(R.drawable.download), "Download", Modifier.size(18.dp), Color.White)
+                        Spacer(Modifier.width(6.dp))
+                        Text("Download")
+                    }
+                }
             }
+        }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -123,6 +142,7 @@ fun TrackInfoAndActionsPreview() {
         title = "Midnight Dreams",
         artist = "Neon Aurora",
         onDownloadClick = {},
-        onLyricsClick = {}
+        onLyricsClick = {},
+        downloadingStatus = DownloadingStatus.InProgress(100)
     )
 }

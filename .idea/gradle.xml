@@ -17,6 +17,10 @@
             <option value="$PROJECT_DIR$/feature-detail/api" />
             <option value="$PROJECT_DIR$/feature-detail/impl" />
             <option value="$PROJECT_DIR$/feature-detail/ui" />
+            <option value="$PROJECT_DIR$/feature-download" />
+            <option value="$PROJECT_DIR$/feature-download/api" />
+            <option value="$PROJECT_DIR$/feature-download/impl" />
+            <option value="$PROJECT_DIR$/feature-download/ui" />
             <option value="$PROJECT_DIR$/feature-explore" />
             <option value="$PROJECT_DIR$/feature-explore/api" />
             <option value="$PROJECT_DIR$/feature-explore/impl" />
@@ -25,12 +29,9 @@
             <option value="$PROJECT_DIR$/feature-home/api" />
             <option value="$PROJECT_DIR$/feature-home/impl" />
             <option value="$PROJECT_DIR$/feature-home/ui" />
-            <option value="$PROJECT_DIR$/feature-saved" />
-            <option value="$PROJECT_DIR$/feature-saved/api" />
-            <option value="$PROJECT_DIR$/feature-saved/impl" />
-            <option value="$PROJECT_DIR$/feature-saved/ui" />
             <option value="$PROJECT_DIR$/navigation" />
             <option value="$PROJECT_DIR$/service" />
+            <option value="$PROJECT_DIR$/storage" />
           </set>
         </option>
       </GradleProjectSettings>

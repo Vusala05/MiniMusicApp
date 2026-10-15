@@ -3,10 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"
+    <uses-permission
+        android:name="android.permission.FOREGROUND_SERVICE"
         tools:ignore="ForegroundServicesPolicy" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:name=".MyApp"
         android:allowBackup="true"
@@ -17,14 +20,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MusicApplication">
+
         <service
             android:name="com.example.service.service.MusicService"
-            android:foregroundServiceType="mediaPlayback"
-            android:exported="false">
-        <intent-filter>
-            <action android:name="androidx.media3.session.MediaSessionService"/>
-        </intent-filter>
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback">
+            <intent-filter>
+                <action android:name="androidx.media3.session.MediaSessionService" />
+            </intent-filter>
         </service>
+
+        <service
+            android:name="androidx.work.impl.foreground.SystemForegroundService"
+            android:foregroundServiceType="dataSync"
+            tools:node="merge" />
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
 
         <activity
             android:name=".MainActivity"
@@ -39,8 +59,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="musicapp.az"
-                    android:host="home"/>
+                    android:host="home"
+                    android:scheme="musicapp.az" />
             </intent-filter>
 
             <intent-filter>
@@ -50,8 +70,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="musicapp.az"
-                    android:host="explore"/>
+                    android:host="explore"
+                    android:scheme="musicapp.az" />
             </intent-filter>
 
             <intent-filter>
@@ -61,8 +81,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="musicapp.az"
-                    android:host="saved"/>
+                    android:host="saved"
+                    android:scheme="musicapp.az" />
             </intent-filter>
 
             <intent-filter>
@@ -72,9 +92,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="musicapp.az"
                     android:host="detail"
-                    android:pathPattern="/.*/"/>
+                    android:pathPattern="/.*/"
+                    android:scheme="musicapp.az" />
             </intent-filter>
 
             <intent-filter>

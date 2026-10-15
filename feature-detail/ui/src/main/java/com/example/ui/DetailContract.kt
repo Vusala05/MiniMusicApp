@@ -2,8 +2,8 @@ package com.example.ui
 
 import com.example.api.response.TrackResponseDO
 import com.example.core_data.util.ButtonState
+import com.example.core_data.util.DownloadingStatus
 import com.example.core_data.util.RepeatMode
-import com.example.service.model.PlaybackState
 
 sealed interface DetailContract {
 
@@ -28,7 +28,7 @@ sealed interface DetailContract {
 
     data class State(
         val isLoading : Boolean = false,
-        val musicDetail : TrackResponseDO = TrackResponseDO("","",0,"","","","",emptyList()),
+        val musicDetail : TrackResponseDO = TrackResponseDO("","",0,"","","","","",false,emptyList()),
         val isPlaying : Boolean = false,
         val isExported : Boolean = false,
         val currentPositionMs : Int = 0,
@@ -38,6 +38,7 @@ sealed interface DetailContract {
         val currentTime : String = "",
         val hasNext : Boolean = false,
         val shuffleEnable : Boolean = false,
+        val downloadStatus : DownloadingStatus =  DownloadingStatus.Idle,
         val btnState : ButtonState = ButtonState.PLAY,
         val hasPrevious : Boolean = false
     )

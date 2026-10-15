@@ -61,7 +61,9 @@ data class TrackResult(
             artistName = this.artistName.orEmpty().ifEmpty { "Unknown Artist" },
             image = this.image.orEmpty().ifEmpty { this.albumImage.orEmpty() },
             audio = this.audio.orEmpty(),
-            instruments = this.musicInfo?.tags?.instruments.orEmpty()
+            instruments = this.musicInfo?.tags?.instruments.orEmpty(),
+            allowedDownloadAudio = this.audioDownloadAllowed ?:false,
+            audioDownload = if(this.audioDownloadAllowed ?:false ) this.audioDownload.orEmpty() else ""
         )
     }
 

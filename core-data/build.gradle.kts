@@ -41,10 +41,16 @@ dependencies {
     ksp(libs.hilt.android.compiler)
     implementation(libs.logging.interceptor)
 
+    //Database
+    implementation(libs.androidx.room3.runtime)
+    ksp(libs.androidx.room3.compiler)
+
     //Retrofit
     implementation(libs.retrofit)
     implementation(libs.kotlinx.serialization.json.v1110)
     implementation(libs.converter.kotlinx.serialization)
+
+
 
 
 }

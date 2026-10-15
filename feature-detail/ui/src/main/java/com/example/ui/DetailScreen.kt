@@ -58,6 +58,7 @@ fun DetailScreen(
                 TrackInfoAndActions(
                     title = state.musicDetail.name,
                     artist = state.musicDetail.artistName,
+                    downloadingStatus = state.downloadStatus,
                     onDownloadClick = { onIntent(DetailContract.Intent.OnDownloadClicked) },
                     onLyricsClick = { onIntent(DetailContract.Intent.OnClickViewLyrics) }
                 )

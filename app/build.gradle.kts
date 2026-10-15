@@ -65,6 +65,11 @@ dependencies {
     ksp(libs.hilt.android.compiler)
     implementation(libs.logging.interceptor)
 
+    //WorkManager
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.hilt.work)
+    ksp(libs.androidx.hilt.compiler)
+
 
     implementation(project(":core-ui"))
     implementation(project(":core-data"))
@@ -75,9 +80,9 @@ dependencies {
     implementation(project(":feature-explore:api"))
     implementation(project(":feature-explore:impl"))
     implementation(project(":feature-explore:ui"))
-    implementation(project(":feature-saved:api"))
-    implementation(project(":feature-saved:impl"))
-    implementation(project(":feature-saved:ui"))
+    implementation(project(":feature-download:api"))
+    implementation(project(":feature-download:impl"))
+    implementation(project(":feature-download:ui"))
     implementation(project(":feature-detail:api"))
     implementation(project(":feature-detail:impl"))
     implementation(project(":feature-detail:ui"))

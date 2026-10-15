@@ -1,6 +1,7 @@
 package com.example.api.useCases
 
 import com.example.api.response.TrackResponseDO
+import com.example.core_data.model.PlayableItem
 import com.example.service.controller.MusicController
 import javax.inject.Inject
 
@@ -10,7 +11,7 @@ class PrepareQueueUseCase @Inject constructor(
     operator fun invoke(
         currentQueueTrackIds: List<String>,
         currentChosenSong: String?,
-        trackList: List<TrackResponseDO>,
+        trackList: List<PlayableItem>,
         trackId: String
     ) {
         if (currentChosenSong == trackId) return
