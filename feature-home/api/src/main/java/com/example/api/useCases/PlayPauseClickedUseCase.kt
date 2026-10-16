@@ -1,7 +1,7 @@
 package com.example.api.useCases
 
-import com.example.service.controller.MusicController
-import com.example.core_data.model.PlayableItem
+import com.example.service.domain.controller.MusicController
+import com.example.service.domain.model.PlayableItem
 import javax.inject.Inject
 
 class PlayPauseClickedUseCase @Inject constructor(

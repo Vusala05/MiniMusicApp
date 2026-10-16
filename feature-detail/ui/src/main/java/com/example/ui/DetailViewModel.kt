@@ -9,7 +9,7 @@ import com.example.api.usecases.DownloadMusicUseCase
 import com.example.core_data.model.ResultWrapper
 import com.example.core_data.useCases.HandleErrorUseCase
 import com.example.core_ui.model.BaseViewModel
-import com.example.service.controller.MusicController
+import com.example.service.domain.controller.MusicController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged

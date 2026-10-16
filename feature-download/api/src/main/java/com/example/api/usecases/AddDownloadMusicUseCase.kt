@@ -1,7 +1,7 @@
 package com.example.api.usecases
 
 import com.example.api.repository.DownloadMusicRepository
-import com.example.core_data.model.DownloadedMusicEntity
+import com.example.storage.data.model.DownloadedMusicEntity
 import javax.inject.Inject
 
 class AddDownloadMusicUseCase @Inject constructor(

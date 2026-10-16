@@ -40,5 +40,9 @@ dependencies {
 
     implementation(project(":core-data"))
     implementation(project(":core-sync"))
+    implementation(project(":service"))
+    implementation(project(":storage"))
+
+
 
 }

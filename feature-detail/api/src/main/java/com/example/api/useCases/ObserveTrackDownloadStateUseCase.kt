@@ -1,9 +1,9 @@
 package com.example.api.useCases
 
-import com.example.core_data.feauture.DownloadRepository
-import com.example.core_data.model.DownloadingState
+import com.example.core_sync.domain.repository.DownloadRepository
 import com.example.core_data.util.DownloadingStatus
-import com.example.core_sync.domain.DownloadController
+import com.example.core_sync.domain.feature.DownloadController
+import com.example.storage.data.model.DownloadingState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import javax.inject.Inject

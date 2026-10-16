@@ -39,6 +39,8 @@ dependencies {
 
     implementation(project(":feature-download:api"))
     implementation(project(":core-data"))
+    implementation(project(":storage"))
+
 
 
 }

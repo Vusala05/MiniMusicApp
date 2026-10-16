@@ -12,7 +12,7 @@ import com.example.core_ui.pagination.PaginationHandler
 import com.example.navigation.DeeplinkNavigator
 import com.example.navigation.Navigator
 import com.example.navigation.navigatorDeepLink
-import com.example.service.controller.MusicController
+import com.example.service.domain.controller.MusicController
 import com.example.ui.HomeScreen.HomeContract
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

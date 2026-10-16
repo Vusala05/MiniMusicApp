@@ -1,9 +1,9 @@
 package com.example.api.usecases
 
 import com.example.api.repository.DownloadMusicRepository
-import com.example.core_data.model.DownloadedMusicEntity
 import com.example.core_sync.data.model.DownloadRequest
-import com.example.core_sync.domain.DownloadController
+import com.example.core_sync.domain.feature.DownloadController
+import com.example.storage.data.model.DownloadedMusicEntity
 import javax.inject.Inject
 
 class DownloadMusicUseCase @Inject constructor(
@@ -15,6 +15,16 @@ class DownloadMusicUseCase @Inject constructor(
                                 image: String){
         if(id.isBlank() || url.isNullOrBlank() ) return
         downloadController.download(DownloadRequest(id= id, url = url,title = title))
-        downloadMusicRepository.addMusic(DownloadedMusicEntity(id,title,duration,artistId,artistName,audio,image))
+        downloadMusicRepository.addMusic(
+            DownloadedMusicEntity(
+                id,
+                title,
+                duration,
+                artistId,
+                artistName,
+                audio,
+                image
+            )
+        )
     }
 }

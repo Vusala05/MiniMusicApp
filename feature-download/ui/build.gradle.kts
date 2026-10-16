@@ -61,6 +61,7 @@ dependencies {
     implementation(project(":core-data"))
     implementation(project(":feature-download:api"))
     implementation(project(":feature-home:api"))
+    implementation(project(":service"))
     implementation(project(":navigation"))
 
 

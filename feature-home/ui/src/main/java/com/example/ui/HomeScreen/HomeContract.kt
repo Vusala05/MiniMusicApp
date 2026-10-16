@@ -7,7 +7,6 @@ import com.example.api.util.Tag
 import com.example.core_data.util.ButtonState
 import com.example.navigation.AppRoutes
 import com.example.navigation.DeeplinkNavigator
-import com.example.service.model.PlaybackState
 
 sealed interface HomeContract {
 

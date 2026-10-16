@@ -10,7 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.core_ui.NotificationPermissionHandler
 import com.example.musicapplication.ui.theme.MusicApplicationTheme
 import com.example.navigation.Navigator
-import com.example.service.controller.MusicController
+import com.example.service.domain.controller.MusicController
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

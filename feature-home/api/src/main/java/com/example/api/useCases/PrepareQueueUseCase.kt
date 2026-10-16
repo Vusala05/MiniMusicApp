@@ -1,8 +1,8 @@
 package com.example.api.useCases
 
 import com.example.api.response.TrackResponseDO
-import com.example.core_data.model.PlayableItem
-import com.example.service.controller.MusicController
+import com.example.service.domain.model.PlayableItem
+import com.example.service.domain.controller.MusicController
 import javax.inject.Inject
 
 class PrepareQueueUseCase @Inject constructor(

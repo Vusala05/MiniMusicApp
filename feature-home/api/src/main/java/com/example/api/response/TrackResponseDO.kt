@@ -1,6 +1,6 @@
 package com.example.api.response
 
-import com.example.core_data.model.PlayableItem
+import com.example.service.domain.model.PlayableItem
 
 data class TrackResponseDO(
     override val id: String,

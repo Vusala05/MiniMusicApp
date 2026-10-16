@@ -3,7 +3,7 @@ package com.example.api.useCases
 import com.example.api.response.TrackResponseDO
 import com.example.core_data.util.ButtonState
 import com.example.core_data.util.RepeatMode
-import com.example.service.controller.MusicController
+import com.example.service.domain.controller.MusicController
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map

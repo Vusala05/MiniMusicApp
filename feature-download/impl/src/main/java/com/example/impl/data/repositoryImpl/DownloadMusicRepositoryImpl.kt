@@ -1,10 +1,12 @@
 package com.example.impl.data.repositoryImpl
 
+import com.example.api.model.DownloadTrackModel
+import com.example.api.model.toUiModel
 import com.example.api.repository.DownloadMusicRepository
-import com.example.core_data.dataSource.DownloadMusicDao
-import com.example.core_data.model.DownloadedMusicEntity
-import com.example.core_data.model.DownloadedTrackView
+import com.example.storage.data.database.DownloadMusicDao
+import com.example.storage.data.model.DownloadedMusicEntity
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class DownloadMusicRepositoryImpl @Inject constructor(
@@ -13,8 +15,8 @@ class DownloadMusicRepositoryImpl @Inject constructor(
     override suspend fun addMusic(downloadedMusicEntity: DownloadedMusicEntity) {
         dao.addMusic(downloadedMusicEntity)
     }
-    override fun observeDownloadedMusics(): Flow<List<DownloadedTrackView>> {
-       return dao.observeDownloadedMusics()
+    override fun observeDownloadedMusics(): Flow<List<DownloadTrackModel>> {
+       return dao.observeDownloadedMusics().map { it.map { it.toUiModel()  } }
     }
 
     override suspend fun deleteDownloadMusicById(id: String) {

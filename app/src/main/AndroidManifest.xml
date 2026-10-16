@@ -22,7 +22,7 @@
         android:theme="@style/Theme.MusicApplication">
 
         <service
-            android:name="com.example.service.service.MusicService"
+            android:name="com.example.service.data.service.MusicService"
             android:exported="false"
             android:foregroundServiceType="mediaPlayback">
             <intent-filter>

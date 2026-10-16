@@ -1,7 +1,7 @@
 package com.example.api.usecases
 
 import com.example.api.repository.DownloadMusicRepository
-import com.example.core_sync.domain.DownloadController
+import com.example.core_sync.domain.feature.DownloadController
 import javax.inject.Inject
 
 
