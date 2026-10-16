@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.android.library)
+    id("musicapp.android.library")
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.android.hilt)
     alias(libs.plugins.ksp)
@@ -8,19 +8,10 @@ plugins {
 
 android {
     namespace = "com.example.feature.home.impl"
-    compileSdk {
-        version = release(37)
-    }
 
     defaultConfig {
-        minSdk = 24
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
     }
 
 }

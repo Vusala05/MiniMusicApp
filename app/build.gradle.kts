@@ -88,13 +88,4 @@ dependencies {
     implementation(project(":feature-detail:ui"))
     implementation(project(":core-sync"))
     implementation(project(":service"))
-
-
-
-
-
-
-
-
-
 }

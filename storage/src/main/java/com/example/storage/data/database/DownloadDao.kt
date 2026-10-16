@@ -29,40 +29,4 @@ interface DownloadDao {
     @Query("DELETE FROM downloaded WHERE state !=:completedState")
     suspend fun deleteAllUnfinishedDownloadInfo(completedState : DownloadingState = DownloadingState.DOWNLOADED_SUCCESSFULLY)
 
-
-
-
-
-
-    /*    @Insert(onConflict = OnConflictStrategy.REPLACE)
-        suspend fun upsertMusicInfo(music: DownloadedMusicEntity)
-
-        @Transaction
-        suspend fun addDownloadMusicInfo(download: DownloadedEntity,music: DownloadedMusicEntity){
-            upsertDownloadInfo(download)
-            upsertMusicInfo(music)
-        }*/
-
-    /* @Query("SELECT * FROM downloaded_track_view WHERE status = :state")
-    fun getDownloadedMusics(state: DownloadingState = DownloadingState.DOWNLOADED_SUCCESSFULLY): Flow<List<DownloadedTrackView>>
-*/
-
-    /* @Query("DELETE FROM downloaded_musics WHERE id = :id")
-    suspend fun deleteDownloadedMusicInfo(id: String)*/
-
-   /* @Transaction
-    suspend fun deleteDownloadedMusic(id: String){
-        deleteDownloadInfo(id)
-        deleteDownloadedMusicInfo(id)
-    }*/
-
-
-
- /*   @Query("DELETE FROM downloaded_musics WHERE id NOT IN (SELECT id FROM downloaded)")
-    suspend fun deleteAllUnfinishedMusicInfo()
-    @Transaction
-    suspend fun deleteUnfinishedWorks(){
-        deleteAllUnfinishedDownloadInfo()
-        deleteAllUnfinishedMusicInfo()
-    }*/
 }
