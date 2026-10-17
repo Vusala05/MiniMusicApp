@@ -1,26 +1,15 @@
 plugins {
     id("musicapp.android.library")
-    alias(libs.plugins.android.hilt)
-    alias(libs.plugins.ksp)
+    id("musicapp.android.hilt")
+
 }
 
 android {
     namespace = "com.example.core_sync"
 
-    defaultConfig {
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
 }
 
 dependencies {
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.junit)
 
     //WorkManager
     implementation(libs.androidx.work.runtime.ktx)
@@ -31,9 +20,7 @@ dependencies {
     implementation(libs.androidx.room3.runtime)
     ksp(libs.androidx.room3.compiler)
 
-    //Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
+    //Network
     implementation(libs.logging.interceptor)
 
     implementation(project(":core-data"))
