@@ -11,14 +11,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import androidx.navigation.toRoute
 import com.example.navigation.AppRoutes
-import com.example.navigation.DeeplinkNavigator
 import com.example.navigation.Navigator
-import com.example.ui.DetailRoute
-import com.example.ui.ExploreRoute
-import com.example.ui.HomeScreen.HomeRoute
-import com.example.ui.SavedRoute
-import com.example.ui.SeeAllScreen.SeeAllAlbum.SeeAllAlbumRoute
-import com.example.ui.SeeAllScreen.SeeAllTrack.SeeAllTrackRoute
+import com.example.impl.ui.DetailRoute
+import com.example.impl.ui.ExploreRoute
+import com.example.impl.ui.HomeScreen.HomeRoute
+import com.example.impl.ui.SavedRoute
+import com.example.impl.ui.SeeAllScreen.SeeAllAlbum.SeeAllAlbumRoute
+import com.example.impl.ui.SeeAllScreen.SeeAllTrack.SeeAllTrackRoute
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -39,7 +38,8 @@ fun  MainRoutes(
     {
         composable<AppRoutes.Home>(
             deepLinks = listOf(
-                navDeepLink { uriPattern = DeeplinkNavigator.MusicHome.routeLink })
+                navDeepLink<AppRoutes.Home>(basePath = AppRoutes.HOME)
+            )
         ){
             HomeRoute()
         }
@@ -47,14 +47,16 @@ fun  MainRoutes(
 
         composable<AppRoutes.Explore>(
             deepLinks = listOf(
-                navDeepLink { uriPattern = DeeplinkNavigator.ExploreMusic.routeLink })
+                navDeepLink<AppRoutes.Explore>(basePath = AppRoutes.EXPLORE)
+        )
         ){
             ExploreRoute()
         }
 
         composable<AppRoutes.Detail>(
             deepLinks = listOf(
-                navDeepLink { uriPattern = "${DeeplinkNavigator.MUSIC_DETAIL}{id}" })
+                navDeepLink<AppRoutes.Detail>(basePath = AppRoutes.MUSIC_DETAIL)
+            )
         ){ navStackEntry ->
             val args = navStackEntry.toRoute<AppRoutes.Detail>()
             DetailRoute( musicId = args.id)
@@ -62,11 +64,12 @@ fun  MainRoutes(
 
         composable<AppRoutes.Saved>(
             deepLinks = listOf(
-                navDeepLink { uriPattern = DeeplinkNavigator.SavedMusic.routeLink })
+                navDeepLink<AppRoutes.Saved>(basePath = AppRoutes.SAVED)
+            )
         ){
             SavedRoute()
         }
-        composable<AppRoutes.SeeAllTrack> { navStackEntry ->
+        composable<AppRoutes.SeeAllTrack> {
             SeeAllTrackRoute()
         }
 
@@ -77,4 +80,6 @@ fun  MainRoutes(
 
 
     }
+
 }
+

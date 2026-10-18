@@ -19,4 +19,10 @@ sealed interface AppRoutes {
     data class SeeAllAlbum(val tag : String?=null): AppRoutes
     @Serializable
     data class Detail (val id : String ) : AppRoutes
+  companion object{
+      const val HOME = "musicapp.az://home"
+      const val EXPLORE = "musicapp.az://explore"
+      const val MUSIC_DETAIL  = "musicapp.az://detail"
+      const val SAVED = "musicapp.az://saved"
+  }
 }

@@ -143,7 +143,8 @@ class DownloadWorker @AssistedInject constructor(
 
     }
 
-    //Under api 12, this foreground service will work correctly, but above in most of the case it will throw exception
+    //Under api 12, this foreground service will work correctly, but above in most of the case it will throw exception,
+    // therefore just in case, we have to use try catch
     override suspend fun getForegroundInfo(): ForegroundInfo {
         val title = inputData.getString(TITLE) ?:""
         return createForegroundInfo(title)
@@ -175,13 +176,13 @@ class DownloadWorker @AssistedInject constructor(
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            //Log.w("DownloadWorker", "Foreground update failed", e)
+
         }
     }
 
     private fun createChannel(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            val channel = NotificationChannel(CHANNEL_ID,"Downloads", NotificationManager.IMPORTANCE_HIGH)
+            val channel = NotificationChannel(CHANNEL_ID,"Downloads", NotificationManager.IMPORTANCE_LOW)
             serviceNotificationManager.createNotificationChannel(channel)
         }
 

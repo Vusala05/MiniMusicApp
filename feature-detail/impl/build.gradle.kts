@@ -1,6 +1,7 @@
 plugins {
     id("musicapp.android.library")
     id("musicapp.android.hilt")
+    id("musicapp.android.compose")
     alias(libs.plugins.kotlin.serialization)
 
 }
@@ -13,6 +14,11 @@ dependencies {
 
     implementation(libs.logging.interceptor)
 
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    //Media3
+    implementation(libs.androidx.media3.ui.compose.material3)
+
     //Retrofit
     implementation(libs.retrofit)
     implementation(libs.kotlinx.serialization.json.v1110)
@@ -20,5 +26,9 @@ dependencies {
     implementation(project(":core-domain"))
     implementation(project(":feature-detail:api"))
     implementation(project(":feature-home:api"))
+    implementation(project(":core-ui"))
+    implementation(project(":feature-download:api"))
+    implementation(project(":service"))
+    implementation(project(":core-sync"))
 
 }
