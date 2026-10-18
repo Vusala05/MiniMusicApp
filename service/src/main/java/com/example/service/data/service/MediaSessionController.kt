@@ -11,8 +11,8 @@ import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
-import com.example.core_data.util.ButtonState
-import com.example.core_data.util.RepeatMode
+import com.example.core_domain.model.ButtonState
+import com.example.core_domain.model.RepeatMode
 import com.example.core_sync.domain.feature.DownloadFileManager
 import com.example.service.domain.controller.MusicController
 import com.example.service.domain.model.PlayableItem

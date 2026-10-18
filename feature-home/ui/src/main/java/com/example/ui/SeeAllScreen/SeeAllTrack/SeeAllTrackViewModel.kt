@@ -6,14 +6,13 @@ import com.example.api.useCases.GetPlayBackStateUseCase
 import com.example.api.useCases.GetTracksUseCase
 import com.example.api.useCases.PlayPauseClickedUseCase
 import com.example.api.useCases.PrepareQueueUseCase
-import com.example.core_data.useCases.HandleErrorUseCase
+import com.example.core_domain.useCases.HandleErrorUseCase
 import com.example.core_ui.model.BaseViewModel
 import com.example.core_ui.pagination.PaginationHandler
 import com.example.navigation.DeeplinkNavigator
 import com.example.navigation.Navigator
 import com.example.navigation.navigatorDeepLink
 import com.example.service.domain.controller.MusicController
-import com.example.ui.HomeScreen.HomeContract
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

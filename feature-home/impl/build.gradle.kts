@@ -20,6 +20,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json.v1110)
 
 
+    implementation(project(":core-domain"))
     implementation(project(":core-data"))
     implementation(project(":feature-home:api"))
 }

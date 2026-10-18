@@ -1,4 +1,4 @@
-package com.example.core_data.model
+package com.example.core_domain.model
 
 sealed interface ResultWrapper<out T> {
     data class Success<T>(val data : T) : ResultWrapper<T>

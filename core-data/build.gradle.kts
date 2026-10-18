@@ -29,7 +29,7 @@ dependencies {
     implementation(libs.converter.kotlinx.serialization)
     implementation(libs.logging.interceptor)
 
-
+    implementation(project(":core-domain"))
 
 
 

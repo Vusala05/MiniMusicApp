@@ -20,7 +20,7 @@ dependencies {
     implementation(libs.androidx.media3.ui.compose.material3)
 
 
-    implementation(project(":core-data"))
+    implementation(project(":core-domain"))
     implementation(project(":core-ui"))
     implementation(project(":feature-detail:api"))
     implementation(project(":feature-home:api"))

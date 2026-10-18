@@ -19,6 +19,10 @@ class DownloadMusicRepositoryImpl @Inject constructor(
        return dao.observeDownloadedMusics().map { it.map { it.toUiModel()  } }
     }
 
+    override suspend fun getDownloadedMusicById(id : String): DownloadTrackModel? {
+        return dao.getDownloadedMusicById(id = id)?.toUiModel()
+    }
+
     override suspend fun deleteDownloadMusicById(id: String) {
         dao.deleteDownloadedMusicInfo(id)
     }

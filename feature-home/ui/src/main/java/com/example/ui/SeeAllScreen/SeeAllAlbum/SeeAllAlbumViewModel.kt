@@ -3,7 +3,7 @@ package com.example.ui.SeeAllScreen.SeeAllAlbum
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.example.api.useCases.GetAlbumsUseCase
-import com.example.core_data.useCases.HandleErrorUseCase
+import com.example.core_domain.useCases.HandleErrorUseCase
 import com.example.core_ui.model.BaseViewModel
 import com.example.core_ui.pagination.PaginationHandler
 import com.example.navigation.AppRoutes

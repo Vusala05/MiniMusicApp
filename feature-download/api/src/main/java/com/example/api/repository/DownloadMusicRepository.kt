@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.Flow
 interface DownloadMusicRepository {
     suspend fun addMusic(downloadedMusicEntity: DownloadedMusicEntity)
     fun observeDownloadedMusics() : Flow<List<DownloadTrackModel>>
+    suspend fun getDownloadedMusicById(id: String) : DownloadTrackModel?
+
     suspend fun deleteDownloadMusicById(id: String)
     suspend fun deleteAllDownloadMusics()
 

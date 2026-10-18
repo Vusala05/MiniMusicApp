@@ -6,10 +6,10 @@ import com.example.api.repository.HomeRepository
 import com.example.api.response.AlbumResponseDO
 import com.example.api.response.ArtistResponseDO
 import com.example.api.response.TrackResponseDO
-import com.example.core_data.feauture.GlobalNetworkHandler
-import com.example.core_data.model.ResultWrapper
-import com.example.core_data.model.apiCallingHandler
-import com.example.core_data.model.handleResultWrapper
+import com.example.core_data.handler.apiCallingHandler
+import com.example.core_domain.handler.GlobalNetworkHandler
+import com.example.core_domain.model.ResultWrapper
+import com.example.core_domain.model.handleResultWrapper
 import com.example.impl.data.dataSource.DataSource
 import javax.inject.Inject
 

@@ -1,6 +1,4 @@
-package com.example.core_data.model
-
-import kotlinx.serialization.SerialName
+package com.example.core_domain.model
 
 data class ErrorModelDo(
     val code : Int?,

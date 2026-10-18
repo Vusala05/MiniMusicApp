@@ -15,9 +15,12 @@ dependencies {
 
 
     implementation(project(":feature-home:api"))
-    implementation(project(":core-data"))
+    implementation(project(":feature-download:api"))
+    implementation(project(":core-domain"))
     implementation(project(":core-sync"))
     implementation(project(":storage"))
+    implementation(project(":service"))
+
 
 
 }

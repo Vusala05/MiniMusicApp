@@ -23,7 +23,6 @@ dependencies {
     //Network
     implementation(libs.logging.interceptor)
 
-    implementation(project(":core-data"))
     implementation(project(":core-ui"))
     implementation(project(":storage"))
 

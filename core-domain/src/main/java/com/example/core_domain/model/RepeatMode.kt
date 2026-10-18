@@ -1,4 +1,4 @@
-package com.example.core_data.util
+package com.example.core_domain.model
 
 enum class RepeatMode{
     REPEAT_MODE_OFF,

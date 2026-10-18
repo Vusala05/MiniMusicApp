@@ -33,7 +33,6 @@ class WorkManagerController @Inject constructor(
         if(existingItem?.state == DownloadingState.DOWNLOADED_SUCCESSFULLY &&
             fileManager.readyFilePath(downloadRequest.id).exists()) return
 
-       // if(!trackResponseDO.allowedDownloadAudio || audioDownloadUrl.isNullOrBlank()) return
         downloadRepository.addItem(
             id = downloadRequest.id, DownloadingState.QUEUED)
 

@@ -1,6 +1,11 @@
-package com.example.core_data.model
+package com.example.core_data.handler
 
-import com.example.core_data.feauture.GlobalNetworkHandler
+import com.example.core_data.model.BaseResponse
+import com.example.core_data.model.HeaderResponse
+import com.example.core_domain.model.ResultWrapper
+import com.example.core_domain.handler.GlobalNetworkHandler
+import com.example.core_domain.model.AppError
+import com.example.core_domain.model.ErrorModelDo
 import kotlinx.serialization.json.Json
 import okio.IOException
 import retrofit2.Response

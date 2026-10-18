@@ -1,5 +1,6 @@
 package com.example.core_data.model
 
+import com.example.core_domain.model.ErrorModelDo
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

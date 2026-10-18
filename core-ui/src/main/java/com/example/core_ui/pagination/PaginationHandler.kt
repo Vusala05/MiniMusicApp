@@ -1,11 +1,9 @@
 package com.example.core_ui.pagination
 
-import com.example.core_data.model.AppError
-import com.example.core_data.model.ResultWrapper
+import com.example.core_domain.model.AppError
+import com.example.core_domain.model.ResultWrapper
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

@@ -1,4 +1,4 @@
-package com.example.core_data.util
+package com.example.core_domain.util
 
 import android.annotation.SuppressLint
 import android.os.Build

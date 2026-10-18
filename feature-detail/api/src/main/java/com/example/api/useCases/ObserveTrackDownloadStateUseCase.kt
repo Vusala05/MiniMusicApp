@@ -1,7 +1,7 @@
 package com.example.api.useCases
 
 import com.example.core_sync.domain.repository.DownloadRepository
-import com.example.core_data.util.DownloadingStatus
+import com.example.core_domain.model.UiDownloadingState
 import com.example.core_sync.domain.feature.DownloadController
 import com.example.storage.data.model.DownloadingState
 import kotlinx.coroutines.flow.Flow
@@ -12,16 +12,16 @@ class ObserveDownloadStatusUseCase @Inject constructor(
     private val downloadRepository: DownloadRepository,
     private val downloadController: DownloadController
 ) {
-    operator fun invoke(id: String): Flow<DownloadingStatus> =
+    operator fun invoke(id: String): Flow<UiDownloadingState> =
         combine(
             downloadRepository.observeCurrentItem(id),
             downloadController.observeProgress(id)
         ) { entity, progress ->
             when (entity?.state) {
-                DownloadingState.DOWNLOADING -> DownloadingStatus.InProgress(progress)
-                DownloadingState.QUEUED -> DownloadingStatus.InProgress(null)
-                DownloadingState.DOWNLOADED_SUCCESSFULLY -> DownloadingStatus.Completed
-                else -> DownloadingStatus.Idle
+                DownloadingState.DOWNLOADING -> UiDownloadingState.InProgress(progress)
+                DownloadingState.QUEUED -> UiDownloadingState.InProgress(null)
+                DownloadingState.DOWNLOADED_SUCCESSFULLY -> UiDownloadingState.Completed
+                else -> UiDownloadingState.Idle
             }
         }
 }

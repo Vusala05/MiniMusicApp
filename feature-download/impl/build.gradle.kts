@@ -17,7 +17,7 @@ dependencies {
     implementation(libs.logging.interceptor)
 
     implementation(project(":feature-download:api"))
-    implementation(project(":core-data"))
+    implementation(project(":core-domain"))
     implementation(project(":storage"))
 
 

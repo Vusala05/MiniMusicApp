@@ -3,7 +3,6 @@ package com.example.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -18,7 +17,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.core_data.util.DownloadingStatus
+import com.example.core_domain.model.UiDownloadingState
 import com.example.core_ui.R
 
 @Composable
@@ -26,7 +25,7 @@ fun TrackInfoAndActions(
     title: String,
     artist: String,
     onDownloadClick: () -> Unit,
-    downloadingStatus: DownloadingStatus,
+    downloadingStatus: UiDownloadingState,
     onLyricsClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -66,7 +65,7 @@ fun TrackInfoAndActions(
         ) {
 
             Spacer(modifier = Modifier.width(12.dp))
-            if (downloadingStatus != DownloadingStatus.Hidden) {
+            if (downloadingStatus != UiDownloadingState.Hidden) {
                 Button(
                 onClick = onDownloadClick,
                 colors = ButtonDefaults.buttonColors(
@@ -76,7 +75,7 @@ fun TrackInfoAndActions(
                 contentPadding = PaddingValues(horizontal = 20.dp, vertical = 10.dp)
             ){
                 when (downloadingStatus) {
-                    is DownloadingStatus.InProgress -> {
+                    is UiDownloadingState.InProgress -> {
                         val downloadingProgress = downloadingStatus.progress
                         if (downloadingProgress != null) {
                             CircularProgressIndicator(
@@ -91,17 +90,18 @@ fun TrackInfoAndActions(
                             )
                         }
                         Spacer(Modifier.width(6.dp))
-                        Text(downloadingProgress?.let { "$it% · Cancel" } ?: "Queued · Cancel")
+                        Text(downloadingProgress?.let { "$it% · Cancel" } ?: "Queued · Cancel",
+                            color = Color.White)
                     }
-                    DownloadingStatus.Completed -> {
+                    UiDownloadingState.Completed -> {
                         Icon(painterResource(R.drawable.download), "Downloaded", Modifier.size(18.dp), Color.White)
                         Spacer(Modifier.width(6.dp))
-                        Text("Downloaded")
+                        Text("Downloaded", color = Color.White)
                     }
                     else -> {
                         Icon(painterResource(R.drawable.download), "Download", Modifier.size(18.dp), Color.White)
                         Spacer(Modifier.width(6.dp))
-                        Text("Download")
+                        Text("Download", color = Color.White)
                     }
                 }
             }
@@ -143,6 +143,6 @@ fun TrackInfoAndActionsPreview() {
         artist = "Neon Aurora",
         onDownloadClick = {},
         onLyricsClick = {},
-        downloadingStatus = DownloadingStatus.InProgress(100)
+        downloadingStatus = UiDownloadingState.InProgress(100)
     )
 }

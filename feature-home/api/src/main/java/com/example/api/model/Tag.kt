@@ -1,4 +1,4 @@
-package com.example.api.util
+package com.example.api.model
 
 enum class Tag(val value : String?) {
     All(null),

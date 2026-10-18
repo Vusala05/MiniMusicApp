@@ -17,7 +17,10 @@ interface DownloadMusicDao {
     @Query("SELECT * FROM downloaded_track_view WHERE state = :state")
     fun observeDownloadedMusics(state: DownloadingState = DownloadingState.DOWNLOADED_SUCCESSFULLY): Flow<List<DownloadedTrackView>>
 
-     @Query("DELETE FROM downloaded_musics WHERE id = :id")
+    @Query("SELECT * FROM downloaded_track_view WHERE state = :state AND id = :id")
+    suspend fun getDownloadedMusicById(id : String,state: DownloadingState = DownloadingState.DOWNLOADED_SUCCESSFULLY): DownloadedTrackView?
+
+    @Query("DELETE FROM downloaded_musics WHERE id = :id")
      suspend fun deleteDownloadedMusicInfo(id: String)
 
     @Query("DELETE FROM downloaded_musics WHERE id NOT IN (SELECT id FROM downloaded)")

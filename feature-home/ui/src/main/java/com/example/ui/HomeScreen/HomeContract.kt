@@ -3,8 +3,8 @@ package com.example.ui.HomeScreen
 import com.example.api.response.AlbumResponseDO
 import com.example.api.response.ArtistResponseDO
 import com.example.api.response.TrackResponseDO
-import com.example.api.util.Tag
-import com.example.core_data.util.ButtonState
+import com.example.api.model.Tag
+import com.example.core_domain.model.ButtonState
 import com.example.navigation.AppRoutes
 import com.example.navigation.DeeplinkNavigator
 

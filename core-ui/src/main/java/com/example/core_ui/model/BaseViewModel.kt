@@ -1,7 +1,7 @@
 package com.example.core_ui.model
 
 import androidx.lifecycle.ViewModel
-import com.example.core_data.model.AppError
+import com.example.core_domain.model.AppError
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow

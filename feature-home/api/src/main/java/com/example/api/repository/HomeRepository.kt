@@ -3,7 +3,7 @@ package com.example.api.repository
 import com.example.api.response.AlbumResponseDO
 import com.example.api.response.ArtistResponseDO
 import com.example.api.response.TrackResponseDO
-import com.example.core_data.model.ResultWrapper
+import com.example.core_domain.model.ResultWrapper
 
 interface HomeRepository {
 

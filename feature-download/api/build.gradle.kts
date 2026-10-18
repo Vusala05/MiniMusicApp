@@ -17,7 +17,6 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
 
 
-    implementation(project(":core-data"))
     implementation(project(":core-sync"))
     implementation(project(":service"))
     implementation(project(":storage"))

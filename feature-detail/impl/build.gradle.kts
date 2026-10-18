@@ -17,7 +17,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.kotlinx.serialization.json.v1110)
 
-    implementation(project(":core-data"))
+    implementation(project(":core-domain"))
     implementation(project(":feature-detail:api"))
     implementation(project(":feature-home:api"))
 

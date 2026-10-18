@@ -24,7 +24,7 @@ dependencies {
     implementation(libs.logging.interceptor)
 
     implementation(project(":core-ui"))
-    implementation(project(":core-data"))
+    implementation(project(":core-domain"))
     implementation(project(":core-sync"))
 
 }

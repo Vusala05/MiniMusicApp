@@ -1,8 +1,8 @@
 package com.example.service.domain.model
 
 import androidx.media3.common.MediaItem
-import com.example.core_data.util.ButtonState
-import com.example.core_data.util.RepeatMode
+import com.example.core_domain.model.ButtonState
+import com.example.core_domain.model.RepeatMode
 
 
 data class PlaybackState(

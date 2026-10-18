@@ -1,6 +1,6 @@
-package com.example.core_data.useCases
+package com.example.core_domain.useCases
 
-import com.example.core_data.model.AppError
+import com.example.core_domain.model.AppError
 import javax.inject.Inject
 
 class HandleErrorUseCase @Inject constructor(){

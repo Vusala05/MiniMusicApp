@@ -28,7 +28,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.core_data.util.ButtonState
+import com.example.core_domain.model.ButtonState
 import com.example.core_ui.R
 import com.example.core_ui.components.EmptySectionView
 import com.example.core_ui.components.SectionLoadingView

@@ -58,7 +58,7 @@ fun DetailScreen(
                 TrackInfoAndActions(
                     title = state.musicDetail.name,
                     artist = state.musicDetail.artistName,
-                    downloadingStatus = state.downloadStatus,
+                    downloadingStatus = state.uiDownloadStatus,
                     onDownloadClick = { onIntent(DetailContract.Intent.OnDownloadClicked) },
                     onLyricsClick = { onIntent(DetailContract.Intent.OnClickViewLyrics) }
                 )
@@ -68,6 +68,7 @@ fun DetailScreen(
                 PlayerBottomControls(
                     btnState = state.btnState,
                     positionMs = state.currentPositionMs,
+                    hasNext = state.hasNext,
                     durationMs = state.totalDurationMs,
                     repeatMode = state.repeatMode,
                     isShuffleOn = state.isShuffleOn ,

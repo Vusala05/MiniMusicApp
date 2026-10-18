@@ -13,7 +13,7 @@ dependencies {
 
     implementation(libs.logging.interceptor)
 
-    implementation(project(":core-data"))
+    implementation(project(":core-domain"))
     implementation(project(":service"))
 
     //Media3

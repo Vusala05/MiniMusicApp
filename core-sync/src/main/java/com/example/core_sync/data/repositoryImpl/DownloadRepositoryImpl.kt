@@ -42,47 +42,6 @@ class DownloadRepositoryImpl @Inject constructor(
     override suspend fun deleteAllUnfinishedWorks() {
         dao.deleteAllUnfinishedDownloadInfo()
     }
-/*
-    override suspend fun getDownloadMusicById(id: String): DownloadedEntity? {
-    }
-
-    override fun observeCurrentTrack(id: String): Flow<DownloadedEntity?> {
-    }
-
-
-    override fun observeAllDownloadedMusics(): Flow<List<DownloadedTrackView>> {
-        return dao.getDownloadedMusics()
-    }
-*/
-
-
-   /* override suspend fun addMusic(
-        id: String,
-        url: String,
-        state: DownloadingState,
-        name : String,
-        duration: Int,
-        artistId : String,
-        artistName : String,
-        audio : String,
-        image: String
-    ) {
-       dao.addDownloadMusicInfo(download = DownloadedEntity(id = id,url = url, urlPath = null, status = state),
-           music = DownloadedMusicEntity(id,name,duration,artistId,artistName,audio,image )
-       )
-    }*/
-
-   /* override suspend fun updateMusic(
-        id: String,
-        state: DownloadingState,
-        fullPath: String?
-    ) {
-        dao.updateStatus(id = id, status = state, path = fullPath)
-    }*/
-
-    /*override suspend fun deleteById(id: String) {
-        dao.deleteDownloadedMusic(id)
-    }*/
 
 
 }

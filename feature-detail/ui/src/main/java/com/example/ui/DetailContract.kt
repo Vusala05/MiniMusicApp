@@ -1,9 +1,9 @@
 package com.example.ui
 
 import com.example.api.response.TrackResponseDO
-import com.example.core_data.util.ButtonState
-import com.example.core_data.util.DownloadingStatus
-import com.example.core_data.util.RepeatMode
+import com.example.core_domain.model.ButtonState
+import com.example.core_domain.model.RepeatMode
+import com.example.core_domain.model.UiDownloadingState
 
 sealed interface DetailContract {
 
@@ -38,7 +38,7 @@ sealed interface DetailContract {
         val currentTime : String = "",
         val hasNext : Boolean = false,
         val shuffleEnable : Boolean = false,
-        val downloadStatus : DownloadingStatus =  DownloadingStatus.Idle,
+        val uiDownloadStatus : UiDownloadingState =  UiDownloadingState.Idle,
         val btnState : ButtonState = ButtonState.PLAY,
         val hasPrevious : Boolean = false
     )

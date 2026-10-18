@@ -18,9 +18,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.core_data.util.ButtonState
-import com.example.core_data.util.RepeatMode
-import com.example.core_data.util.msToFormattedDuration
+import com.example.core_domain.model.ButtonState
+import com.example.core_domain.model.RepeatMode
+import com.example.core_domain.util.msToFormattedDuration
 import com.example.core_ui.R
 
 @Composable
@@ -36,6 +36,7 @@ fun PlayerBottomControls(
     onPlayPauseClick: () -> Unit,
     onNextClick: () -> Unit,
     onRepeatClick: () -> Unit,
+    hasNext : Boolean,
     modifier: Modifier = Modifier
 ) {
     var dragValue by remember { mutableStateOf<Float?>(null) }
@@ -146,11 +147,12 @@ fun PlayerBottomControls(
 
             }
 
-            IconButton(onClick = onNextClick) {
+            IconButton(onClick = onNextClick,
+                enabled = hasNext) {
                 Icon(
                     painter =  painterResource(R.drawable.next),
                     contentDescription = "Next",
-                    tint = Color.White,
+                    tint = if(hasNext)Color.White else Color.White.copy(alpha = 0.5f),
                     modifier = Modifier.size(32.dp)
                 )
             }

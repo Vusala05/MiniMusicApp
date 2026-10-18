@@ -1,7 +1,7 @@
 package com.example.ui.SeeAllScreen.SeeAllTrack
 
 import com.example.api.response.TrackResponseDO
-import com.example.core_data.util.ButtonState
+import com.example.core_domain.model.ButtonState
 import com.example.core_ui.pagination.PagingState
 import com.example.navigation.DeeplinkNavigator
 

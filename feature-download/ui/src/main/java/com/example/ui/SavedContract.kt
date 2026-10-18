@@ -1,7 +1,7 @@
 package com.example.ui
 
 import com.example.api.model.DownloadTrackModel
-import com.example.core_data.util.ButtonState
+import com.example.core_domain.model.ButtonState
 import com.example.navigation.DeeplinkNavigator
 
 sealed interface SavedContract {

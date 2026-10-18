@@ -1,7 +1,7 @@
 package com.example.core_data.di
 
-import com.example.core_data.feauture.GlobalNetworkHandler
-import com.example.core_data.model.GlobalNetworkHandlerImpl
+import com.example.core_data.handler.GlobalNetworkHandlerImpl
+import com.example.core_domain.handler.GlobalNetworkHandler
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

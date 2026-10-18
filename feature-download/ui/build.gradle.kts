@@ -17,7 +17,7 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
 
     implementation(project(":core-ui"))
-    implementation(project(":core-data"))
+    implementation(project(":core-domain"))
     implementation(project(":feature-download:api"))
     implementation(project(":feature-home:api"))
     implementation(project(":service"))

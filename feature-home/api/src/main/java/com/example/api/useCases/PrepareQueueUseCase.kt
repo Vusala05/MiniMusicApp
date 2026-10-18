@@ -1,6 +1,5 @@
 package com.example.api.useCases
 
-import com.example.api.response.TrackResponseDO
 import com.example.service.domain.model.PlayableItem
 import com.example.service.domain.controller.MusicController
 import javax.inject.Inject
