@@ -18,12 +18,11 @@ object SeeAllTrackContract {
     }
     data class State(
         val pagingState: PagingState<TrackResponseDO> = PagingState(),
-        val tag : String?=null,
-        val albumId: String?=null,
         val chosenSong : String? = null,
         val currentQueueTrackIds : List<String> = emptyList(),
         val isPlaying : Boolean = false,
-        val playPauseBtnState : ButtonState = ButtonState.PLAY
+        val playPauseBtnState : ButtonState = ButtonState.PLAY,
+        val totalDuration : Int = 0
     )
 
 }

@@ -1,4 +1,7 @@
 package com.example.service.data.service
+import android.content.Intent
+import android.os.Binder
+import android.os.IBinder
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.exoplayer.ExoPlayer
@@ -11,6 +14,11 @@ class MusicService : MediaSessionService() {
 
     private var mediaSession: MediaSession? = null
 
+
+    override fun onBind(intent: Intent?): IBinder? {
+        return super.onBind(intent)
+
+    }
     override fun onCreate() {
         super.onCreate()
         val player = ExoPlayer.Builder(this)

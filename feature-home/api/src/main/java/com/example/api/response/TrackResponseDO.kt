@@ -1,5 +1,6 @@
 package com.example.api.response
 
+import com.example.core_domain.model.UiDownloadingState
 import com.example.service.domain.model.PlayableItem
 
 data class TrackResponseDO(

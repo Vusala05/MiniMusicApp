@@ -28,7 +28,7 @@ class HomeViewModel @Inject constructor(
     val prepareQueueUseCase: PrepareQueueUseCase,
     val handleErrorUseCase: HandleErrorUseCase,
     val playPauseClickedUseCase: PlayPauseClickedUseCase,
-    val getPlayBackStateUseCase: GetPlayBackStateUseCase
+    val getPlayBackStateUseCase: GetPlayBackStateUseCase,
 ) : BaseViewModel<HomeContract.State, HomeContract.Effect>(
     initialState = HomeContract.State()
 ) {
@@ -65,7 +65,8 @@ class HomeViewModel @Inject constructor(
                     isPlaying = playbackInfo.isPlaying,
                     chosenSong = playbackInfo.chosenSong,
                     currentQueueTrackIds = playbackInfo.currentQueueTrackIds,
-                    playPauseBtnState = playbackInfo.btnState) }
+                    playPauseBtnState = playbackInfo.btnState,
+                    totalDuration = playbackInfo.totalDurationMs) }
 
                 playbackInfo.errorMessage?.let {
                     sendEffect(HomeContract.Effect.SendMessage(it))

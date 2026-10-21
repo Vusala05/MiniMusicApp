@@ -1,12 +1,13 @@
 package com.example.service.domain.controller
 
+import com.example.service.domain.model.DynamicPlayBackState
 import com.example.service.domain.model.PlayableItem
 import com.example.service.domain.model.PlaybackState
 import kotlinx.coroutines.flow.StateFlow
 
 interface MusicController {
     val playbackState: StateFlow<PlaybackState>
-
+    val dynamicPlayBackState : StateFlow<DynamicPlayBackState>
     fun bind()
     fun unbind()
 

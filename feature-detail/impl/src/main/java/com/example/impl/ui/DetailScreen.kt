@@ -66,12 +66,12 @@ fun DetailScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 PlayerBottomControls(
-                    btnState = state.btnState,
-                    positionMs = state.currentPositionMs,
-                    hasNext = state.hasNext,
-                    durationMs = state.totalDurationMs,
-                    repeatMode = state.repeatMode,
-                    isShuffleOn = state.isShuffleOn,
+                    btnState = state.playbackState.btnState,
+                    positionMs = state.dynamicPlayBackState.currentPosition,
+                    hasNext = state.playbackState.hasNext,
+                    durationMs = state.playbackState.totalDurationMs,
+                    repeatMode = state.playbackState.repeatMode,
+                    isShuffleOn = state.playbackState.isShuffleOn,
                     onSeek = { ms -> onIntent(DetailContract.Intent.OnSeek(ms)) },
                     onShuffleClick = { onIntent(DetailContract.Intent.OnShuffleClick) },
                     onPreviousClick = { onIntent(DetailContract.Intent.OnPreviousClick) },

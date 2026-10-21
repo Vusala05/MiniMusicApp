@@ -1,10 +1,12 @@
 package com.example.impl.data.dataSource
 
+import com.example.api.response.TrackResponseDO
 import com.example.core_data.BuildConfig
 import com.example.core_data.model.BaseResponse
 import com.example.impl.data.response.AlbumResponse
 import com.example.impl.data.response.ArtistResult
 import com.example.impl.data.response.TrackResult
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -61,6 +63,13 @@ DataSource {
         @Query("offset") offset: Int,
         @Query("format") format: String = "json"
     ): Response<BaseResponse<List<ArtistResult>>>
+
+    @GET("tracks")
+    suspend fun getSearchedTracks(
+        @Query("limit") limit: Int = 20,
+        @Query("offset") offset: Int = 0,
+        @Query("search") search: String? = null,
+    ): Response<BaseResponse<Flow<List<TrackResponseDO>>>>
 
 
 

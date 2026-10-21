@@ -10,7 +10,6 @@ data class PlaybackState(
     val currentIndex: Int = -1,
     val isPlaying: Boolean = false,
     val currentItem : MediaItem?=null,
-    val currentPositionMs: Int = 0,
     val totalDurationMs: Int = 0,
     val hasNext: Boolean = false,
     val hasPrevious: Boolean = false,
@@ -19,5 +18,8 @@ data class PlaybackState(
     val btnState : ButtonState = ButtonState.PLAY,
     val currentQueueItemsId : List<MediaItem> = emptyList(),
     val errorMessage : String?=null
-) {
-}
+)
+
+data class DynamicPlayBackState(
+    val currentPositionMs: Int = 0,
+)

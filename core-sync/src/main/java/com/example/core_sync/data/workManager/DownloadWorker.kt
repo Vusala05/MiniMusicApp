@@ -4,6 +4,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.ServiceInfo
+import android.os.Binder
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.hilt.work.HiltWorker
@@ -142,9 +143,6 @@ class DownloadWorker @AssistedInject constructor(
             }
 
     }
-
-    //Under api 12, this foreground service will work correctly, but above in most of the case it will throw exception,
-    // therefore just in case, we have to use try catch
     override suspend fun getForegroundInfo(): ForegroundInfo {
         val title = inputData.getString(TITLE) ?:""
         return createForegroundInfo(title)

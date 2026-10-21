@@ -17,9 +17,9 @@ import javax.inject.Inject
 @HiltViewModel
 class SavedViewModel @Inject constructor(
     private val getDownloadedMusicsUseCase: GetDownloadedMusicsUseCase,
-    private val getPlayBackStateUseCase: GetPlayBackStateUseCase,
     private val playPauseClickedUseCase: PlayPauseClickedUseCase,
     private val prepareQueueUseCase: PrepareQueueUseCase,
+    private val getPlayBackStateUseCase: GetPlayBackStateUseCase,
     private val navigator: Navigator
 ) : BaseViewModel<SavedContract.State, SavedContract.Effect>
     (initialState = SavedContract.State() ){

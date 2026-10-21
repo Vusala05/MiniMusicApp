@@ -31,6 +31,7 @@ sealed interface HomeContract {
         val isAlbumLoading : Boolean = false,
         val isArtistLoading : Boolean = false,
         val selectedTab : Tag = Tag.All,
+        val totalDuration : Int = 0,
         val playPauseBtnState : ButtonState = ButtonState.PLAY
     )
 

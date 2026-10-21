@@ -2,6 +2,7 @@ package com.example.impl.ui.SeeAllScreen.SeeAllAlbum
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import com.example.api.useCases.GetAlbumsUseCase
 import com.example.core_domain.useCases.HandleErrorUseCase
 import com.example.core_ui.model.BaseViewModel
@@ -22,7 +23,8 @@ class SeeAllAlbumViewModel @Inject constructor(
 ): BaseViewModel<SeeAllAlbumContract.State, SeeAllAlbumContract.Effect>(
     initialState = SeeAllAlbumContract.State()
 ) {
-    private val tag: String? = savedStateHandle["tag"]
+    private val route = savedStateHandle.toRoute<AppRoutes.SeeAllAlbum>()
+    private val tag = route.tag
     init {
         updateUiState { it.copy(selectedTag = tag) }
     }

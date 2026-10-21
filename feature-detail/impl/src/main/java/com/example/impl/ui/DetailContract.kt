@@ -1,8 +1,8 @@
 package com.example.impl.ui
 
 import com.example.api.response.TrackResponseDO
-import com.example.core_domain.model.ButtonState
-import com.example.core_domain.model.RepeatMode
+import com.example.api.useCases.DynamicPlayBackInfo
+import com.example.api.useCases.PlayBackInfo
 import com.example.core_domain.model.UiDownloadingState
 
 sealed interface DetailContract {
@@ -27,20 +27,11 @@ sealed interface DetailContract {
     }
 
     data class State(
+        val playbackState: PlayBackInfo = PlayBackInfo(),
+        val dynamicPlayBackState: DynamicPlayBackInfo = DynamicPlayBackInfo(),
         val isLoading : Boolean = false,
         val musicDetail : TrackResponseDO = TrackResponseDO("","",0,"","","","","",false,emptyList()),
-        val isPlaying : Boolean = false,
-        val isExported : Boolean = false,
-        val currentPositionMs : Int = 0,
-        val totalDurationMs : Int = 0,
-        val isShuffleOn : Boolean = false,
-        val repeatMode : RepeatMode = RepeatMode.REPEAT_MODE_OFF,
-        val currentTime : String = "",
-        val hasNext : Boolean = false,
-        val shuffleEnable : Boolean = false,
         val uiDownloadStatus : UiDownloadingState =  UiDownloadingState.Idle,
-        val btnState : ButtonState = ButtonState.PLAY,
-        val hasPrevious : Boolean = false
     )
 
 }

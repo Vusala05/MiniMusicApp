@@ -1,6 +1,7 @@
 package com.example.impl.ui
 
 import androidx.lifecycle.viewModelScope
+import com.example.api.useCases.GetDynamicPlayBackStateUseCase
 import com.example.api.useCases.GetMusicDetailUseCase
 import com.example.api.useCases.GetPlayBackStateUseCase
 import com.example.api.useCases.ObserveDownloadStatusUseCase
@@ -19,13 +20,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.collections.copy
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     val getMusicDetailUseCase: GetMusicDetailUseCase,
     val handleErrorUseCase: HandleErrorUseCase,
     val getPlayBackStateUseCase: GetPlayBackStateUseCase,
+    val getDynamicPlayBackStateUseCase: GetDynamicPlayBackStateUseCase,
     val musicController: MusicController,
     val downloadMusicUseCase: DownloadMusicUseCase,
     val deleteChosenMusicUseCase: DeleteChosenMusicUseCase,
@@ -80,7 +81,7 @@ class DetailViewModel @Inject constructor(
             }
             is DetailContract.Intent.OnShuffleClick -> {
                 val currentState = getCurrentState()
-               musicController.setShuffleEnabled(!currentState.isShuffleOn)
+               musicController.setShuffleEnabled(!currentState.playbackState.isShuffleOn)
             }
         }
     }
@@ -104,13 +105,7 @@ class DetailViewModel @Inject constructor(
             getPlayBackStateUseCase().collectLatest { playBackInfo ->
                 updateUiState {
                     it.copy(
-                        isPlaying = playBackInfo.isPlaying,
-                        currentPositionMs = playBackInfo.currentPositionMs,
-                        totalDurationMs = playBackInfo.totalDurationMs,
-                        hasNext = playBackInfo.hasNext,
-                        isShuffleOn = playBackInfo.isShuffleOn,
-                        repeatMode = playBackInfo.repeatMode,
-                        btnState = playBackInfo.btnState
+                       playbackState = playBackInfo
                     )
                 }
                 playBackInfo.errorMessage?.let {
@@ -121,11 +116,9 @@ class DetailViewModel @Inject constructor(
     }
     private fun observeProgressbar(){
         viewModelScope.launch {
-            musicController.playbackState
-                .map { it.currentPositionMs to it.totalDurationMs }
-                .distinctUntilChanged()
-                .collect{ (currentPositionMs,totalDurationMs)->
-                  _state.update { it.copy(currentPositionMs = currentPositionMs, totalDurationMs = totalDurationMs) }
+            getDynamicPlayBackStateUseCase()
+                .collect { dynamicPlayBack ->
+                  _state.update { it.copy(dynamicPlayBackState = dynamicPlayBack) }
                 }
         }
     }

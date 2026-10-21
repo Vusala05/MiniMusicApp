@@ -1,6 +1,7 @@
 package com.example.impl.ui.SeeAllScreen.SeeAllTrack
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import com.example.api.useCases.GetAlbumTrackUseCase
 import com.example.api.useCases.GetPlayBackStateUseCase
 import com.example.api.useCases.GetTracksUseCase
@@ -20,19 +21,20 @@ import javax.inject.Inject
 @HiltViewModel
 class SeeAllTrackViewModel @Inject constructor(
     val getTracksUseCase: GetTracksUseCase,
-    val getPlayBackStateUseCase: GetPlayBackStateUseCase,
     val playPauseClickedUseCase: PlayPauseClickedUseCase,
     val handleErrorUseCase: HandleErrorUseCase,
     val getAlbumTrackUseCase: GetAlbumTrackUseCase,
     val prepareQueueUseCase: PrepareQueueUseCase,
     val navigator: Navigator,
+    val getPlayBackStateUseCase: GetPlayBackStateUseCase,
     val musicController: MusicController,
     savedStateHandle: SavedStateHandle
 ): BaseViewModel<SeeAllTrackContract.State, SeeAllTrackContract.Effect>(
 initialState = SeeAllTrackContract.State()
 ) {
-    private val tag: String? = savedStateHandle["tag"]
-    private val albumId: String? = savedStateHandle["albumId"]
+    private val route = savedStateHandle.toRoute<AppRoutes.SeeAllTrack>()
+    val tag = route.tag
+    val albumId = route.albumId
 
     val paginationHandler = PaginationHandler(
         coroutineScope = viewModelScope,
@@ -94,14 +96,15 @@ initialState = SeeAllTrackContract.State()
     }
     private fun observePlayBackStateFormMediaController(){
         viewModelScope.launch {
-            getPlayBackStateUseCase().collect { playBackState ->
-              updateUiState { it.copy(
-                  isPlaying = playBackState.isPlaying,
-                  chosenSong = playBackState.chosenSong,
-                  currentQueueTrackIds = playBackState.currentQueueTrackIds,
-                  playPauseBtnState = playBackState.btnState)}
+            getPlayBackStateUseCase().collect { playbackInfo->
+                updateUiState { it.copy(
+                    isPlaying = playbackInfo.isPlaying,
+                    chosenSong = playbackInfo.chosenSong,
+                    currentQueueTrackIds = playbackInfo.currentQueueTrackIds,
+                    playPauseBtnState = playbackInfo.btnState,
+                    totalDuration = playbackInfo.totalDurationMs) }
 
-                playBackState.errorMessage?.let {
+                playbackInfo.errorMessage?.let {
                     sendEffect(SeeAllTrackContract.Effect.ShowMessage(it))
                 }
             }

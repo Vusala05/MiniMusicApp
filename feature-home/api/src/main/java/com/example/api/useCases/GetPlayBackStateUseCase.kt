@@ -13,20 +13,8 @@ class GetPlayBackStateUseCase @Inject constructor(
     val musicController: MusicController
 ) {
 
-    // Position  her 500 ms ile deyisdiyinden onlar
-    // gelende collect edilmir her defe
      operator fun invoke() : Flow<PlayBackInfo> {
-        return musicController.playbackState.distinctUntilChanged { old, new ->
-             val eqIsPlaying = old.isPlaying == new.isPlaying
-             val eqCurrentTrackId = old.currentItem == new.currentItem
-             val eqTrackId = old.currentItem?.mediaId == new.currentItem?.mediaId
-             val eqShuffle = old.isShuffleOn == new.isShuffleOn
-             val eqRepeat = old.repeatMode == new.repeatMode
-             val eqHasNext = old.hasNext == new.hasNext
-             val eqBtnState = old.btnState == new.btnState
-             val eqQueue = old.currentQueueItemsId.map { it.mediaId } == new.currentQueueItemsId.map { it.mediaId }
-             eqIsPlaying && eqCurrentTrackId && eqQueue && eqBtnState && eqTrackId && eqShuffle && eqRepeat && eqHasNext
-         }.map{ currentState ->
+        return musicController.playbackState.map{ currentState ->
             PlayBackInfo(
                  isPlaying = currentState.isPlaying,
                  chosenSong = currentState.currentItem?.mediaId,
@@ -35,7 +23,6 @@ class GetPlayBackStateUseCase @Inject constructor(
                 isShuffleOn = currentState.isShuffleOn,
                 repeatMode = currentState.repeatMode,
                 hasNext = currentState.hasNext,
-                currentPositionMs = currentState.currentPositionMs,
                 totalDurationMs = currentState.totalDurationMs,
                 errorMessage = currentState.errorMessage,
                  currentQueueTrackIds = currentState.currentQueueItemsId.map { it.mediaId })
@@ -54,10 +41,7 @@ data class PlayBackInfo(
     val repeatMode : RepeatMode = RepeatMode.REPEAT_MODE_OFF,
     val hasNext : Boolean = false,
     val totalDurationMs : Int = 0,
-    val currentPositionMs : Int = 0,
     val errorMessage : String?=null
-
-
 )
 
 

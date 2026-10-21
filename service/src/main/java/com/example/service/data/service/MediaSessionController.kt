@@ -15,6 +15,7 @@ import com.example.core_domain.model.ButtonState
 import com.example.core_domain.model.RepeatMode
 import com.example.core_sync.domain.feature.DownloadFileManager
 import com.example.service.domain.controller.MusicController
+import com.example.service.domain.model.DynamicPlayBackState
 import com.example.service.domain.model.PlayableItem
 import com.example.service.domain.model.PlaybackState
 import com.google.common.util.concurrent.ListenableFuture
@@ -43,6 +44,10 @@ class MediaSessionController @Inject constructor(
 
     private val _playbackState = MutableStateFlow(PlaybackState())
     override val playbackState: StateFlow<PlaybackState> = _playbackState.asStateFlow()
+
+    private val _dynamicPlaybackState = MutableStateFlow(DynamicPlayBackState())
+    override val dynamicPlayBackState: StateFlow<DynamicPlayBackState> = _dynamicPlaybackState.asStateFlow()
+
     val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     var progressJob : Job?=null
     var controllerFuture: ListenableFuture<MediaController>? = null
@@ -102,7 +107,7 @@ class MediaSessionController @Inject constructor(
         progressJob = scope.launch {
             while (isActive) {
                currentController?.let {
-                   _playbackState.update { it.copy(currentPositionMs = currentController.currentPosition.toInt()) }
+                   _dynamicPlaybackState.update { it.copy(currentPositionMs = currentController.currentPosition.toInt()) }
                }
                 delay(500L)
                 }
@@ -213,6 +218,10 @@ class MediaSessionController @Inject constructor(
             else ->ButtonState.PLAY
         }
 
+        _dynamicPlaybackState.update {
+            it.copy(currentPositionMs = player.currentPosition.coerceAtLeast(0L).toInt())
+        }
+
         _playbackState.update { old ->
             val queue = if (events == null || events.contains(Player.EVENT_TIMELINE_CHANGED)) {
                 List(player.mediaItemCount) { player.getMediaItemAt(it) }
@@ -224,9 +233,8 @@ class MediaSessionController @Inject constructor(
                 isPlaying = player.isPlaying,
                 currentItem = player.currentMediaItem,
                 currentQueueItemsId = queue,
-                currentPositionMs = player.currentPosition.coerceAtLeast(0L).toInt(),
-                totalDurationMs = player.duration.coerceAtLeast(0L).toInt(),
                 hasNext = player.hasNextMediaItem(),
+                totalDurationMs = player.duration.coerceAtLeast(0L).toInt(),
                 hasPrevious = player.hasPreviousMediaItem(),
                 isShuffleOn = player.shuffleModeEnabled,
                 repeatMode = when(player.repeatMode){
