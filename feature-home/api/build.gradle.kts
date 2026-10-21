@@ -13,10 +13,12 @@ dependencies {
 
     implementation(libs.logging.interceptor)
 
+    //Media3
+    implementation(libs.androidx.media3.ui.compose.material3)
+
     implementation(project(":core-domain"))
     implementation(project(":service"))
 
-    //Media3
-    implementation(libs.androidx.media3.ui.compose.material3)
+
 
 }

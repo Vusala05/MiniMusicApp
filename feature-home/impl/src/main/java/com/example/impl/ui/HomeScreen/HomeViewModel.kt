@@ -3,10 +3,10 @@ package com.example.impl.ui.HomeScreen
 import androidx.lifecycle.viewModelScope
 import com.example.api.useCases.GetAlbumsUseCase
 import com.example.api.useCases.GetArtistUseCase
-import com.example.api.useCases.GetPlayBackStateUseCase
+import com.example.service.domain.useCases.GetPlayBackStateUseCase
 import com.example.api.useCases.GetTracksUseCase
-import com.example.api.useCases.PlayPauseClickedUseCase
-import com.example.api.useCases.PrepareQueueUseCase
+import com.example.service.domain.useCases.PlayPauseClickedUseCase
+import com.example.service.domain.useCases.PrepareQueueUseCase
 import com.example.core_domain.model.ResultWrapper
 import com.example.core_domain.useCases.HandleErrorUseCase
 import com.example.core_ui.model.BaseViewModel

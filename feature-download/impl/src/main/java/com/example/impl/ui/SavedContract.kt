@@ -1,7 +1,7 @@
 package com.example.impl.ui
 
-import com.example.api.model.DownloadTrackModel
 import com.example.core_domain.model.ButtonState
+import com.example.core_domain.model.TrackResponseDO
 import com.example.navigation.AppRoutes
 
 sealed interface SavedContract {
@@ -16,7 +16,7 @@ sealed interface SavedContract {
     }
     data class State(
         val loading : Boolean = false,
-        val downloadedList : List<DownloadTrackModel> = emptyList(),
+        val downloadedList : List<TrackResponseDO> = emptyList(),
         val chosenSong : String? = null,
         val currentQueueTrackIds : List<String> = emptyList(),
         val isPlaying : Boolean = false,

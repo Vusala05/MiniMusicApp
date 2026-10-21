@@ -1,6 +1,6 @@
 package com.example.impl.ui.SeeAllScreen.SeeAllTrack
 
-import com.example.api.response.TrackResponseDO
+import com.example.core_domain.model.TrackResponseDO
 import com.example.core_domain.model.ButtonState
 import com.example.core_ui.pagination.PagingState
 import com.example.navigation.AppRoutes

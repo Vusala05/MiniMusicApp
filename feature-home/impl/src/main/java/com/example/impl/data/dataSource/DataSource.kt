@@ -1,6 +1,6 @@
 package com.example.impl.data.dataSource
 
-import com.example.api.response.TrackResponseDO
+import com.example.core_domain.model.TrackResponseDO
 import com.example.core_data.BuildConfig
 import com.example.core_data.model.BaseResponse
 import com.example.impl.data.response.AlbumResponse
@@ -65,11 +65,12 @@ DataSource {
     ): Response<BaseResponse<List<ArtistResult>>>
 
     @GET("tracks")
-    suspend fun getSearchedTracks(
+    suspend fun observeSearchedTracks(
+        @Query("client_id") clientId: String = BuildConfig.CLIENT_ID,
         @Query("limit") limit: Int = 20,
         @Query("offset") offset: Int = 0,
-        @Query("search") search: String? = null,
-    ): Response<BaseResponse<Flow<List<TrackResponseDO>>>>
+        @Query("namesearch") search: String? = null,
+    ): Response<BaseResponse<List<TrackResult>>>
 
 
 

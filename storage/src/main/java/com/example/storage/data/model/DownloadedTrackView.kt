@@ -2,9 +2,8 @@ package com.example.storage.data.model
 
 import androidx.room3.DatabaseView
 
-// bu sekilde yazmaq ele de vacib deyildi, sonradan ferqine vardim, yeni ki bir basa ele dao da join ile
-//yaza bilerdim @Query seklinde, amma bu sekilde 1 defelik bir query oldugundan, her defe eyni join yazmayim deye
-//saxladimki lazim ola biler sonradan
+// bu sekilde yazmaga ehtiyac qalmadi
+/*
 @DatabaseView(viewName = "downloaded_track_view",
     value = """
         SELECT d.id AS id,
@@ -30,3 +29,4 @@ data class DownloadedTrackView(
     val audio : String,
     val image: String
 )
+*/

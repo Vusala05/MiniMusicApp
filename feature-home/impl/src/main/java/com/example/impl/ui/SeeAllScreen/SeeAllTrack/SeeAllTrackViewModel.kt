@@ -3,10 +3,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.example.api.useCases.GetAlbumTrackUseCase
-import com.example.api.useCases.GetPlayBackStateUseCase
+import com.example.service.domain.useCases.GetPlayBackStateUseCase
 import com.example.api.useCases.GetTracksUseCase
-import com.example.api.useCases.PlayPauseClickedUseCase
-import com.example.api.useCases.PrepareQueueUseCase
+import com.example.service.domain.useCases.PlayPauseClickedUseCase
+import com.example.service.domain.useCases.PrepareQueueUseCase
 import com.example.core_domain.useCases.HandleErrorUseCase
 import com.example.core_ui.model.BaseViewModel
 import com.example.core_ui.pagination.PaginationHandler
@@ -14,6 +14,7 @@ import com.example.navigation.AppRoutes
 import com.example.navigation.Navigator
 import com.example.navigation.navigatorRoute
 import com.example.service.domain.controller.MusicController
+import com.example.service.domain.useCases.AppendToQueueUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,7 +28,7 @@ class SeeAllTrackViewModel @Inject constructor(
     val prepareQueueUseCase: PrepareQueueUseCase,
     val navigator: Navigator,
     val getPlayBackStateUseCase: GetPlayBackStateUseCase,
-    val musicController: MusicController,
+    val appendToQueueUseCase: AppendToQueueUseCase,
     savedStateHandle: SavedStateHandle
 ): BaseViewModel<SeeAllTrackContract.State, SeeAllTrackContract.Effect>(
 initialState = SeeAllTrackContract.State()
@@ -43,7 +44,7 @@ initialState = SeeAllTrackContract.State()
             else  getTracksUseCase(tag = tag,offset = offset)
          },
         onError = { appError -> sendEffect(SeeAllTrackContract.Effect.ShowMessage(handleErrorUseCase(appError))) },
-        onLoadedNewDataList = { dataList -> musicController.appendToQueue(dataList) }
+        onLoadedNewDataList = { dataList -> appendToQueueUseCase(dataList) }
     )
 
     init {
@@ -61,9 +62,7 @@ initialState = SeeAllTrackContract.State()
                 onPlayPauseClicked(intent.trackId)
             }
             is SeeAllTrackContract.Intent.LoadNextPage -> {
-                viewModelScope.launch {
                     paginationHandler.loadNextPage()
-                }
 
             }
             is SeeAllTrackContract.Intent.OnClickTrackItem -> {

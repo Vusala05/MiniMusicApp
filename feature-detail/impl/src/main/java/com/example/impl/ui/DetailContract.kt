@@ -1,8 +1,8 @@
 package com.example.impl.ui
 
-import com.example.api.response.TrackResponseDO
-import com.example.api.useCases.DynamicPlayBackInfo
-import com.example.api.useCases.PlayBackInfo
+import com.example.core_domain.model.TrackResponseDO
+import com.example.service.domain.useCases.DynamicPlayBackInfo
+import com.example.service.domain.useCases.PlayBackInfo
 import com.example.core_domain.model.UiDownloadingState
 
 sealed interface DetailContract {
@@ -30,7 +30,7 @@ sealed interface DetailContract {
         val playbackState: PlayBackInfo = PlayBackInfo(),
         val dynamicPlayBackState: DynamicPlayBackInfo = DynamicPlayBackInfo(),
         val isLoading : Boolean = false,
-        val musicDetail : TrackResponseDO = TrackResponseDO("","",0,"","","","","",false,emptyList()),
+        val musicDetail : TrackResponseDO = TrackResponseDO("","",0,"","","","","",false),
         val uiDownloadStatus : UiDownloadingState =  UiDownloadingState.Idle,
     )
 

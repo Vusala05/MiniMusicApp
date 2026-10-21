@@ -16,7 +16,7 @@ import com.example.core_domain.model.RepeatMode
 import com.example.core_sync.domain.feature.DownloadFileManager
 import com.example.service.domain.controller.MusicController
 import com.example.service.domain.model.DynamicPlayBackState
-import com.example.service.domain.model.PlayableItem
+import com.example.core_domain.model.PlayableItem
 import com.example.service.domain.model.PlaybackState
 import com.google.common.util.concurrent.ListenableFuture
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -166,8 +166,43 @@ class MediaSessionController @Inject constructor(
     c.play()
 }
 
+    override fun <T : PlayableItem> playPauseSingleItem(item: T) {
+        val mediaItem = item.toMediaItem()
+        withController {
+            val isCurrentItem = it.currentMediaItem?.mediaId == item.id
+            when{
+                isCurrentItem -> togglePlayPause()
+                else ->{
+                    it.setMediaItem(mediaItem)
+                    it.prepare()
+                    it.play()
+                }
+            }
 
-     override fun togglePlayPause() = withController {
+        }
+    }
+
+    override fun <T : PlayableItem> playSingleItem(item: T) {
+        val mediaItem = item.toMediaItem()
+        withController {
+            val isCurrent = it.currentMediaItem?.mediaId == item.id
+            when{
+                isCurrent -> {
+                    if (controller?.playbackState == Player.STATE_IDLE) {
+                        controller?.prepare()
+                    }
+                }
+                else -> {
+                    it.setMediaItem(mediaItem)
+                    it.prepare()
+                    it.play()
+                }
+            }
+        }
+    }
+
+
+    override fun togglePlayPause() = withController {
              when{
                  it.playbackState == Player.STATE_IDLE -> {
                      it.prepare()
@@ -264,21 +299,24 @@ class MediaSessionController @Inject constructor(
     }
 
 
-    private fun<T : PlayableItem> List<T>.toMediaItems(): List<MediaItem> = this.map{ item ->
-       val file = fileManager.readyFilePath(item.id)
-        val uri= if(file.exists()) file.toUri() else item.audio.toUri()
-        MediaItem.Builder()
-            .setMediaId(item.id)
+    private fun<T : PlayableItem> T.toMediaItem(): MediaItem {
+        val file = fileManager.readyFilePath(id)
+        val uri= if(file.exists()) file.toUri() else audio.toUri()
+        return MediaItem.Builder()
+            .setMediaId(id)
             .setUri(uri)
             .setMediaMetadata(
                 MediaMetadata.Builder()
-                    .setArtist(item.artistName)
-                    .setTitle(item.name)
-                    .setArtworkUri(item.image.toUri())
+                    .setArtist(artistName)
+                    .setTitle(name)
+                    .setArtworkUri(image.toUri())
                     .build()
             )
             .build()
 
+    }
+    private fun<T : PlayableItem> List<T>.toMediaItems(): List<MediaItem> = this.map{ item ->
+      item.toMediaItem()
     }
 
 }

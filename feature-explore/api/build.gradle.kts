@@ -1,5 +1,6 @@
 plugins {
     id("musicapp.android.library")
+    id("musicapp.android.hilt")
 }
 
 android {
@@ -8,5 +9,11 @@ android {
 }
 
 dependencies {
+
+    implementation(libs.logging.interceptor)
+
+    implementation(project(":core-domain"))
+    implementation(project(":service"))
+    implementation(project(":feature-home:api"))
 
 }

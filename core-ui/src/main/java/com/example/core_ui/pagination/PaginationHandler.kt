@@ -24,6 +24,10 @@ import kotlinx.coroutines.launch
 
      fun loadInitialData() = loadData(reset = true)
      fun loadNextPage() = loadData(reset = false)
+     fun clear() {
+         job?.cancel()
+         _pagingState.value = PagingState<T>()
+     }
 
     private  fun loadData(reset: Boolean) {
         val state = _pagingState.value

@@ -1,6 +1,6 @@
 package com.example.impl.data.response
 
-import com.example.api.response.TrackResponseDO
+import com.example.core_domain.model.TrackResponseDO
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -61,7 +61,6 @@ data class TrackResult(
             artistName = this.artistName.orEmpty().ifEmpty { "Unknown Artist" },
             image = this.image.orEmpty().ifEmpty { this.albumImage.orEmpty() },
             audio = this.audio.orEmpty(),
-            instruments = this.musicInfo?.tags?.instruments.orEmpty(),
             allowedDownloadAudio = this.audioDownloadAllowed ?:false,
             audioDownload = if(this.audioDownloadAllowed ?:false ) this.audioDownload.orEmpty() else ""
         )

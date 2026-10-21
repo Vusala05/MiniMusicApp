@@ -1,9 +1,9 @@
 package com.example.impl.ui
 
 import androidx.lifecycle.viewModelScope
-import com.example.api.useCases.GetPlayBackStateUseCase
-import com.example.api.useCases.PlayPauseClickedUseCase
-import com.example.api.useCases.PrepareQueueUseCase
+import com.example.service.domain.useCases.GetPlayBackStateUseCase
+import com.example.service.domain.useCases.PlayPauseClickedUseCase
+import com.example.service.domain.useCases.PrepareQueueUseCase
 import com.example.api.usecases.GetDownloadedMusicsUseCase
 import com.example.core_ui.model.BaseViewModel
 import com.example.navigation.AppRoutes

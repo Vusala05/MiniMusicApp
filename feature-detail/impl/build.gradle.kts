@@ -25,7 +25,6 @@ dependencies {
 
     implementation(project(":core-domain"))
     implementation(project(":feature-detail:api"))
-    implementation(project(":feature-home:api"))
     implementation(project(":core-ui"))
     implementation(project(":feature-download:api"))
     implementation(project(":service"))

@@ -1,4 +1,4 @@
-package com.example.service.domain.model
+package com.example.core_domain.model
 
 interface PlayableItem {
     val id : String

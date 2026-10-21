@@ -18,6 +18,7 @@ dependencies {
 
 
     implementation(project(":core-sync"))
+    implementation(project(":core-domain"))
     implementation(project(":service"))
     implementation(project(":storage"))
 

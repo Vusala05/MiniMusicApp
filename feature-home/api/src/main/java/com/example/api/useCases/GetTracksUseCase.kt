@@ -1,7 +1,7 @@
 package com.example.api.useCases
 
 import com.example.api.repository.HomeRepository
-import com.example.api.response.TrackResponseDO
+import com.example.core_domain.model.TrackResponseDO
 import com.example.core_domain.model.ResultWrapper
 import javax.inject.Inject
 

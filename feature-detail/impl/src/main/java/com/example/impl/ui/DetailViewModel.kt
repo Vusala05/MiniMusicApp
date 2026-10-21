@@ -1,9 +1,11 @@
 package com.example.impl.ui
 
 import androidx.lifecycle.viewModelScope
-import com.example.api.useCases.GetDynamicPlayBackStateUseCase
+import com.example.api.useCases.ControlBottomComponents
+import com.example.api.useCases.ControlDetailBottomComponentsUseCase
+import com.example.service.domain.useCases.GetDynamicPlayBackStateUseCase
 import com.example.api.useCases.GetMusicDetailUseCase
-import com.example.api.useCases.GetPlayBackStateUseCase
+import com.example.service.domain.useCases.GetPlayBackStateUseCase
 import com.example.api.useCases.ObserveDownloadStatusUseCase
 import com.example.api.usecases.DeleteChosenMusicUseCase
 import com.example.api.usecases.DownloadMusicUseCase
@@ -11,7 +13,6 @@ import com.example.core_domain.model.ResultWrapper
 import com.example.core_domain.model.UiDownloadingState
 import com.example.core_domain.useCases.HandleErrorUseCase
 import com.example.core_ui.model.BaseViewModel
-import com.example.service.domain.controller.MusicController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -27,7 +28,7 @@ class DetailViewModel @Inject constructor(
     val handleErrorUseCase: HandleErrorUseCase,
     val getPlayBackStateUseCase: GetPlayBackStateUseCase,
     val getDynamicPlayBackStateUseCase: GetDynamicPlayBackStateUseCase,
-    val musicController: MusicController,
+    val controlDetailBottomComponentsUseCase: ControlDetailBottomComponentsUseCase,
     val downloadMusicUseCase: DownloadMusicUseCase,
     val deleteChosenMusicUseCase: DeleteChosenMusicUseCase,
     val observeDownloadStatusUseCase: ObserveDownloadStatusUseCase
@@ -49,13 +50,15 @@ class DetailViewModel @Inject constructor(
 
             }
             is DetailContract.Intent.OnNextClick -> {
-               musicController.next()
+               controlDetailBottomComponentsUseCase(ControlBottomComponents.ToggleNext)
             }
             is DetailContract.Intent.OnPreviousClick -> {
-               musicController.previous()
+                controlDetailBottomComponentsUseCase(ControlBottomComponents.TogglePrevious)
+
             }
             is DetailContract.Intent.OnClickPlayingBtn -> {
-                   musicController.togglePlayPause()
+                controlDetailBottomComponentsUseCase(ControlBottomComponents.TogglePlayPause)
+
             }
             is DetailContract.Intent.OnBackClick -> {
 
@@ -64,7 +67,7 @@ class DetailViewModel @Inject constructor(
                 viewModelScope.launch {
                     val currentDetail = getCurrentState().musicDetail
                     when(getCurrentState().uiDownloadStatus){
-                        UiDownloadingState.Idle -> downloadMusicUseCase(currentDetail.id,currentDetail.audioDownload,currentDetail.name,currentDetail.duration,currentDetail.artistId,currentDetail.artistName,currentDetail.audio,currentDetail.image)
+                        UiDownloadingState.Idle -> downloadMusicUseCase(currentDetail)
                         is UiDownloadingState.InProgress,
                         UiDownloadingState.Completed -> deleteChosenMusicUseCase(currentDetail.id)
 
@@ -74,14 +77,15 @@ class DetailViewModel @Inject constructor(
 
             }
             is DetailContract.Intent.OnSeek -> {
-               musicController.seekTo(intent.positionMs)
+                controlDetailBottomComponentsUseCase(ControlBottomComponents.SeekTo(intent.positionMs))
             }
             is DetailContract.Intent.OnRepeatClick -> {
-              musicController.toggleRepeatMode()
+                controlDetailBottomComponentsUseCase(ControlBottomComponents.ToggleRepeatMode)
+
             }
             is DetailContract.Intent.OnShuffleClick -> {
                 val currentState = getCurrentState()
-               musicController.setShuffleEnabled(!currentState.playbackState.isShuffleOn)
+                controlDetailBottomComponentsUseCase(ControlBottomComponents.SetShuffleEnabled(!currentState.playbackState.isShuffleOn))
             }
         }
     }
@@ -125,8 +129,7 @@ class DetailViewModel @Inject constructor(
 
     private fun observeCurrentTrack() {
         viewModelScope.launch {
-            musicController.playbackState
-                .map { it.currentItem?.mediaId }
+            getPlayBackStateUseCase().map { it.trackId }
                 .filterNotNull()
                 .distinctUntilChanged()
                 .collectLatest { id ->

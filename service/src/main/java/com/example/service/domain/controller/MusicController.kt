@@ -1,7 +1,7 @@
 package com.example.service.domain.controller
 
 import com.example.service.domain.model.DynamicPlayBackState
-import com.example.service.domain.model.PlayableItem
+import com.example.core_domain.model.PlayableItem
 import com.example.service.domain.model.PlaybackState
 import kotlinx.coroutines.flow.StateFlow
 
@@ -17,6 +17,8 @@ interface MusicController {
     fun <T : PlayableItem> setQueue(data: List<T>, startIndex: Int)
     fun seekToIndex(index: Int)
     fun playAtIndex(index: Int)
+    fun <T: PlayableItem> playPauseSingleItem(item : T)
+    fun <T: PlayableItem> playSingleItem(item : T)
     fun togglePlayPause()
     fun next()
     fun previous()

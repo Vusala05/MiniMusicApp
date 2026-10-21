@@ -1,13 +1,13 @@
-package com.example.api.useCases
+package com.example.service.domain.useCases
 
 import com.example.core_domain.model.ButtonState
 import com.example.core_domain.model.RepeatMode
 import com.example.service.domain.controller.MusicController
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
-import kotlin.collections.map
+
+
 
 class GetPlayBackStateUseCase @Inject constructor(
     val musicController: MusicController

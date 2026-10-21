@@ -5,13 +5,15 @@ import androidx.annotation.RequiresApi
 import com.example.api.repository.HomeRepository
 import com.example.api.response.AlbumResponseDO
 import com.example.api.response.ArtistResponseDO
-import com.example.api.response.TrackResponseDO
+import com.example.core_domain.model.TrackResponseDO
 import com.example.core_data.handler.apiCallingHandler
 import com.example.core_domain.handler.GlobalNetworkHandler
 import com.example.core_domain.model.ResultWrapper
 import com.example.core_domain.model.handleResultWrapper
 import com.example.impl.data.dataSource.DataSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class HomeRepositoryImpl @Inject constructor(
@@ -46,7 +48,7 @@ class HomeRepositoryImpl @Inject constructor(
     override suspend fun getTrackById(id: String): ResultWrapper<TrackResponseDO> {
         return handleResultWrapper(result = apiCallingHandler(globalNetworkHandler = globalNetworkHandler,
             apiCalling ={ dataSource.getSongById(id = id) } ), transform = { result ->
-            result?.firstOrNull()?.toUiModel() ?: TrackResponseDO("","",0,"","","","","",false,emptyList())
+            result?.firstOrNull()?.toUiModel() ?: TrackResponseDO("","",0,"","","","","",false)
         })
     }
 
@@ -54,6 +56,16 @@ class HomeRepositoryImpl @Inject constructor(
         return handleResultWrapper(result = apiCallingHandler(globalNetworkHandler = globalNetworkHandler,
             apiCalling ={ dataSource.getAlbumTracks(albumId = albumId, offset = offset) } ), transform = { result ->
             result?.map { it.toUiModel() }.orEmpty()
+        })
+    }
+
+    override suspend fun getSearchedTracks(
+        offset: Int,
+        search: String
+    ): ResultWrapper<List<TrackResponseDO>> {
+        return handleResultWrapper(result = apiCallingHandler(globalNetworkHandler = globalNetworkHandler,
+            apiCalling ={ dataSource.observeSearchedTracks(search =search, offset = offset) } ), transform = { result ->
+            result?.map { it.toUiModel()}.orEmpty()
         })
     }
 }

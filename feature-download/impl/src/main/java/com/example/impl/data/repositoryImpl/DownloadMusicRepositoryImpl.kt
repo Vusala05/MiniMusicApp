@@ -1,8 +1,8 @@
 package com.example.impl.data.repositoryImpl
 
-import com.example.api.model.DownloadTrackModel
-import com.example.api.model.toUiModel
+import com.example.api.mapper.toUiModel
 import com.example.api.repository.DownloadMusicRepository
+import com.example.core_domain.model.TrackResponseDO
 import com.example.storage.data.database.DownloadMusicDao
 import com.example.storage.data.model.DownloadedMusicEntity
 import kotlinx.coroutines.flow.Flow
@@ -15,11 +15,11 @@ class DownloadMusicRepositoryImpl @Inject constructor(
     override suspend fun addMusic(downloadedMusicEntity: DownloadedMusicEntity) {
         dao.addMusic(downloadedMusicEntity)
     }
-    override fun observeDownloadedMusics(): Flow<List<DownloadTrackModel>> {
+    override fun observeDownloadedMusics(): Flow<List<TrackResponseDO>> {
        return dao.observeDownloadedMusics().map { it.map { it.toUiModel()  } }
     }
 
-    override suspend fun getDownloadedMusicById(id : String): DownloadTrackModel? {
+    override suspend fun getDownloadedMusicById(id : String): TrackResponseDO? {
         return dao.getDownloadedMusicById(id = id)?.toUiModel()
     }
 
