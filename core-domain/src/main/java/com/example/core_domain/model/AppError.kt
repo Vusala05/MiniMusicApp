@@ -4,7 +4,6 @@ sealed interface AppError {
 
     data class BusinessError(
         val errorModel: ErrorModelDo,
-        val exception: Exception
     ) : AppError
 
     data class SystemError(

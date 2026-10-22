@@ -25,7 +25,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     val getMusicDetailUseCase: GetMusicDetailUseCase,
-    val handleErrorUseCase: HandleErrorUseCase,
+     handleErrorUseCase: HandleErrorUseCase,
     val getPlayBackStateUseCase: GetPlayBackStateUseCase,
     val getDynamicPlayBackStateUseCase: GetDynamicPlayBackStateUseCase,
     val controlDetailBottomComponentsUseCase: ControlDetailBottomComponentsUseCase,
@@ -33,7 +33,8 @@ class DetailViewModel @Inject constructor(
     val deleteChosenMusicUseCase: DeleteChosenMusicUseCase,
     val observeDownloadStatusUseCase: ObserveDownloadStatusUseCase
 ) : BaseViewModel<DetailContract.State, DetailContract.Effect>
-    (initialState = DetailContract.State() ){
+    (initialState = DetailContract.State(),
+            handleErrorUseCase = handleErrorUseCase){
 
         init {
             observeCurrentTrack()
@@ -67,7 +68,13 @@ class DetailViewModel @Inject constructor(
                 viewModelScope.launch {
                     val currentDetail = getCurrentState().musicDetail
                     when(getCurrentState().uiDownloadStatus){
-                        UiDownloadingState.Idle -> downloadMusicUseCase(currentDetail)
+                        UiDownloadingState.Idle -> {
+                            when( val res =  downloadMusicUseCase(currentDetail)){
+                                is ResultWrapper.Success -> Unit
+                                is ResultWrapper.Error -> handleError(res.appError)
+                            }
+
+                        }
                         is UiDownloadingState.InProgress,
                         UiDownloadingState.Completed -> deleteChosenMusicUseCase(currentDetail.id)
 
@@ -89,18 +96,26 @@ class DetailViewModel @Inject constructor(
             }
         }
     }
-
+    //
+     var loadingId : String? = null
     private fun loadMusicDetail(id : String){
+        if (loadingId == id ) return
+        if (getCurrentState().musicDetail.id == id) return
+        loadingId = id
         viewModelScope.launch {
-            when(val res = getMusicDetailUseCase(id) ){
-                is ResultWrapper.Success ->{
-                    updateUiState { it.copy(musicDetail = res.data) }
-                }
-                is ResultWrapper.Error ->{
-                    sendEffect(DetailContract.Effect.SendMessage(handleErrorUseCase(res.appError)))
-                }
+                try {
+                when(val res = getMusicDetailUseCase(id) ){
+                    is ResultWrapper.Success ->{
+                        updateUiState { it.copy(musicDetail = res.data) }
+                    }
+                    is ResultWrapper.Error ->{
+                        handleError(res.appError)
+                    }
 
-            }
+                }
+            }finally {
+                    loadingId  = null
+                }
         }
 
     }
@@ -157,4 +172,8 @@ class DetailViewModel @Inject constructor(
                 }
         }
     }
+
+    override suspend fun showErrorMessage(error: String) {
+        sendEffect(DetailContract.Effect.SendMessage(error))
     }
+}

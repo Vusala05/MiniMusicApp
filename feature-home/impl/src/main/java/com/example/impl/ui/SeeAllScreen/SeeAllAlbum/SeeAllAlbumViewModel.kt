@@ -17,11 +17,12 @@ import javax.inject.Inject
 @HiltViewModel
 class SeeAllAlbumViewModel @Inject constructor(
     val getAlbumsUseCase: GetAlbumsUseCase,
-    val handleErrorUseCase: HandleErrorUseCase,
+     handleErrorUseCase: HandleErrorUseCase,
     val navigator: Navigator,
     savedStateHandle: SavedStateHandle
 ): BaseViewModel<SeeAllAlbumContract.State, SeeAllAlbumContract.Effect>(
-    initialState = SeeAllAlbumContract.State()
+    initialState = SeeAllAlbumContract.State(),
+    handleErrorUseCase = handleErrorUseCase
 ) {
     private val route = savedStateHandle.toRoute<AppRoutes.SeeAllAlbum>()
     private val tag = route.tag
@@ -31,7 +32,7 @@ class SeeAllAlbumViewModel @Inject constructor(
     val paginationHandler = PaginationHandler(
         coroutineScope = viewModelScope,
         onGetData = { offset -> getAlbumsUseCase(offset = offset, tag = tag) },
-        onError = { appError -> sendEffect(SeeAllAlbumContract.Effect.ShowMessage(handleErrorUseCase(appError))) },
+        onError = { appError -> handleError(appError) },
     )
 
     init {
@@ -70,6 +71,10 @@ class SeeAllAlbumViewModel @Inject constructor(
         navigator.navigatorRoute {
             navigate(appRoutes)
         }
+    }
+
+    override suspend fun showErrorMessage(error: String) {
+        sendEffect(SeeAllAlbumContract.Effect.ShowMessage(error))
     }
 
 

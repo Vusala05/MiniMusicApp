@@ -21,13 +21,14 @@ import kotlin.time.Duration.Companion.seconds
 @HiltViewModel
 class ExploreViewModel @Inject constructor(
     val observeSearchedTracksUseCase: ObserveSearchedTracksUseCase,
-    val handleErrorUseCase: HandleErrorUseCase,
+     handleErrorUseCase: HandleErrorUseCase,
     val getPlayBackStateUseCase: GetPlayBackStateUseCase,
     val playSingleItemUseCase: PlaySingleItemUseCase,
     val playPauseSingleItemUseCase : PlayPauseSingleItemUseCase,
     val navigator: Navigator
     ): BaseViewModel<ExploreContract.State, ExploreContract.Effect>(
-    initialState = ExploreContract.State()
+    initialState = ExploreContract.State(),
+        handleErrorUseCase = handleErrorUseCase
 ) {
 
     val paginationHandler = PaginationHandler(
@@ -36,15 +37,7 @@ class ExploreViewModel @Inject constructor(
             val currentState = getCurrentState()
             observeSearchedTracksUseCase(search = currentState.searchedString, offset = offset)
         },
-        onError = { appError ->
-            sendEffect(
-                ExploreContract.Effect.SendMessage(
-                    handleErrorUseCase(
-                        appError
-                    )
-                )
-            )
-        }
+        onError = { appError -> handleError(appError)}
     )
 
     init {
@@ -134,5 +127,9 @@ class ExploreViewModel @Inject constructor(
             navigate(appRoutes)
         }
 
+    }
+
+    override suspend fun showErrorMessage(error: String) {
+        sendEffect(ExploreContract.Effect.SendMessage(error))
     }
 }

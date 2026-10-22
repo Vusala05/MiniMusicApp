@@ -12,14 +12,10 @@ import javax.inject.Inject
 class GlobalNetworkHandlerImpl @Inject constructor(val coroutineScope: CoroutineScope) :
     GlobalNetworkHandler {
     val _sharedFlow  = MutableSharedFlow<AppError>()
-    val sharedFlow  = _sharedFlow.asSharedFlow()
+    override val sharedFlow  = _sharedFlow.asSharedFlow()
     override fun globalErrorHandler(error: AppError) {
         coroutineScope.launch {
-            if(error !is CancellationException) {
                 _sharedFlow.emit(error)
-            }
         }
-
-
     }
 }

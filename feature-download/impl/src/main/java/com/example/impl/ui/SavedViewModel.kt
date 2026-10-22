@@ -5,6 +5,7 @@ import com.example.service.domain.useCases.GetPlayBackStateUseCase
 import com.example.service.domain.useCases.PlayPauseClickedUseCase
 import com.example.service.domain.useCases.PrepareQueueUseCase
 import com.example.api.usecases.GetDownloadedMusicsUseCase
+import com.example.core_domain.useCases.HandleErrorUseCase
 import com.example.core_ui.model.BaseViewModel
 import com.example.navigation.AppRoutes
 import com.example.navigation.Navigator
@@ -20,9 +21,11 @@ class SavedViewModel @Inject constructor(
     private val playPauseClickedUseCase: PlayPauseClickedUseCase,
     private val prepareQueueUseCase: PrepareQueueUseCase,
     private val getPlayBackStateUseCase: GetPlayBackStateUseCase,
+    handleErrorUseCase: HandleErrorUseCase,
     private val navigator: Navigator
 ) : BaseViewModel<SavedContract.State, SavedContract.Effect>
-    (initialState = SavedContract.State() ){
+    (initialState = SavedContract.State(),
+            handleErrorUseCase = handleErrorUseCase){
 
         init {
             getAllDownloadedMusics()
@@ -90,4 +93,4 @@ class SavedViewModel @Inject constructor(
         }
     }
 
-    }
+}

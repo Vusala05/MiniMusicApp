@@ -5,34 +5,27 @@ sealed interface ResultWrapper<out T> {
     data class Error (val appError: AppError) : ResultWrapper<Nothing>
 }
 
-inline fun <reified T,reified R> handleResultWrapper(
-    result : ResultWrapper<T>,
-    transform : (T) -> R
-) : ResultWrapper<R>{
-     return when(result){
-         is ResultWrapper.Error ->{
-             ResultWrapper.Error(result.appError)
-         }
-         is ResultWrapper.Success ->{
-             try {
-                 val transformResult = transform(result.data)
-                 ResultWrapper.Success(data = transformResult)
-             } catch (e : Exception){
-                 ResultWrapper.Error(
-                     AppError.SystemError(
-                         errorModel = ErrorModelDo(
-                             code = Integer.MAX_VALUE - 4,
-                             errorMessage = e.localizedMessage,
-                             warnings = e.localizedMessage
-                         ),
-                         exception = e
-                     )
-                 )
-             }
+fun <T,R> ResultWrapper<T>.toTransform( transform:(T) -> R) : ResultWrapper<R>{
+    return when(this){
+        is ResultWrapper.Error -> ResultWrapper.Error(appError)
+        is ResultWrapper.Success ->{
+            try {
+                val transformResult = transform(data)
+                ResultWrapper.Success(data = transformResult)
+            } catch (e : Exception){
+                ResultWrapper.Error(
+                    AppError.SystemError(
+                        errorModel = ErrorModelDo(
+                            errorType = ErrorType.MAPPING,
+                            errorMessage = e.localizedMessage,
+                            warnings = e.localizedMessage
+                        ),
+                        exception = e
+                    )
+                )
+            }
 
-         }
+        }
 
-
-     }
-
+    }
 }

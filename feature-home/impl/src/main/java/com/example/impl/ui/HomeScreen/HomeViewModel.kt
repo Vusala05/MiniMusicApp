@@ -26,10 +26,11 @@ class HomeViewModel @Inject constructor(
     val getArtistUseCase: GetArtistUseCase,
     val navigator: Navigator,
     val prepareQueueUseCase: PrepareQueueUseCase,
-    val handleErrorUseCase: HandleErrorUseCase,
+    handleErrorUseCase: HandleErrorUseCase,
     val playPauseClickedUseCase: PlayPauseClickedUseCase,
     val getPlayBackStateUseCase: GetPlayBackStateUseCase,
 ) : BaseViewModel<HomeContract.State, HomeContract.Effect>(
+    handleErrorUseCase = handleErrorUseCase,
     initialState = HomeContract.State()
 ) {
 
@@ -107,7 +108,7 @@ class HomeViewModel @Inject constructor(
              }
                 is ResultWrapper.Error ->{
                     updateUiState { it.copy(isAlbumLoading = false) }
-                    sendEffect(HomeContract.Effect.SendMessage(handleErrorUseCase(res.appError)))
+                    handleError(res.appError)
                 }
             }
         }
@@ -122,7 +123,7 @@ class HomeViewModel @Inject constructor(
                 }
                 is ResultWrapper.Error ->{
                     updateUiState { it.copy(isTrackLoading = false) }
-                    sendEffect(HomeContract.Effect.SendMessage(handleErrorUseCase(res.appError)))
+                    handleError(res.appError)
                 }
             }
         }
@@ -138,7 +139,7 @@ class HomeViewModel @Inject constructor(
                 }
                 is ResultWrapper.Error ->{
                     updateUiState { it.copy(isArtistLoading = false) }
-                    sendEffect(HomeContract.Effect.SendMessage(handleErrorUseCase(res.appError)))
+                    handleError(res.appError)
                 }
             }
         }
@@ -160,6 +161,10 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    override suspend fun showErrorMessage(error: String) {
+        sendEffect(HomeContract.Effect.SendMessage(error))
+
+    }
 
 
 }

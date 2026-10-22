@@ -23,7 +23,7 @@ import javax.inject.Inject
 class SeeAllTrackViewModel @Inject constructor(
     val getTracksUseCase: GetTracksUseCase,
     val playPauseClickedUseCase: PlayPauseClickedUseCase,
-    val handleErrorUseCase: HandleErrorUseCase,
+     handleErrorUseCase: HandleErrorUseCase,
     val getAlbumTrackUseCase: GetAlbumTrackUseCase,
     val prepareQueueUseCase: PrepareQueueUseCase,
     val navigator: Navigator,
@@ -31,7 +31,8 @@ class SeeAllTrackViewModel @Inject constructor(
     val appendToQueueUseCase: AppendToQueueUseCase,
     savedStateHandle: SavedStateHandle
 ): BaseViewModel<SeeAllTrackContract.State, SeeAllTrackContract.Effect>(
-initialState = SeeAllTrackContract.State()
+initialState = SeeAllTrackContract.State(),
+    handleErrorUseCase = handleErrorUseCase
 ) {
     private val route = savedStateHandle.toRoute<AppRoutes.SeeAllTrack>()
     val tag = route.tag
@@ -43,7 +44,7 @@ initialState = SeeAllTrackContract.State()
            if(albumId!=null) getAlbumTrackUseCase(offset = offset, albumId = albumId)
             else  getTracksUseCase(tag = tag,offset = offset)
          },
-        onError = { appError -> sendEffect(SeeAllTrackContract.Effect.ShowMessage(handleErrorUseCase(appError))) },
+        onError = { appError -> handleError(appError) },
         onLoadedNewDataList = { dataList -> appendToQueueUseCase(dataList) }
     )
 
@@ -124,6 +125,10 @@ initialState = SeeAllTrackContract.State()
         navigator.navigatorRoute {
             navigate(appRoutes)
         }
+    }
+
+    override suspend fun showErrorMessage(error: String) {
+        sendEffect(SeeAllTrackContract.Effect.ShowMessage(error))
     }
 
 

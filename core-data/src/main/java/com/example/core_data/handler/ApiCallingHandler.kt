@@ -1,152 +1,46 @@
 package com.example.core_data.handler
 
+import android.util.Log
 import com.example.core_data.model.BaseResponse
+import com.example.core_data.model.ErrorResponse
 import com.example.core_data.model.HeaderResponse
+import com.example.core_data.util.toBusinessError
+import com.example.core_data.util.toSystemError
 import com.example.core_domain.model.ResultWrapper
 import com.example.core_domain.handler.GlobalNetworkHandler
 import com.example.core_domain.model.AppError
 import com.example.core_domain.model.ErrorModelDo
+import com.example.core_domain.model.ErrorType
+import com.example.core_domain.model.fromHttpCode
 import kotlinx.serialization.json.Json
 import okio.IOException
 import retrofit2.Response
+import java.net.ConnectException
 import java.net.SocketException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import java.util.concurrent.TimeoutException
 import javax.net.ssl.SSLHandshakeException
+import kotlin.coroutines.cancellation.CancellationException
 
-inline fun <reified T > apiCallingHandler(
+inline fun <T> apiCallingHandler(
     globalNetworkHandler: GlobalNetworkHandler,
-    apiCalling : () -> Response<BaseResponse<T>>
-) : ResultWrapper<T?> {
+    apiCalling: () -> Response<BaseResponse<T>>
+): ResultWrapper<T?> {
     return try {
-    val result = apiCalling()
-
-    if (result.isSuccessful) {
-        val data = result.body()?.results
-
-        ResultWrapper.Success(data = data)
-
-
-    } else {
-        val errorBody = result.errorBody()?.string()
-        val errorModel = if (errorBody.isNullOrBlank()) {
-            ErrorModelDo(
-                code = result.code(),
-                errorMessage = result.message(),
-                warnings = "Something went wrong"
-            )
-        } else {
-            try {
-                Json.decodeFromString<HeaderResponse>(errorBody).toUiModel()
-            } catch (e: Exception) {
-                ErrorModelDo(
-                    code = Integer.MAX_VALUE - 1,
-                    errorMessage = e.localizedMessage,
-                    warnings = e.localizedMessage
-                )
-
-
-            }
+        val response = apiCalling()
+        if(response.isSuccessful){
+            ResultWrapper.Success(data = response.body()?.results )
+        } else{
+            ResultWrapper.Error(response.toBusinessError())
         }
 
+   } catch (e : Exception){
+        Log.d("ApiCall", "failed", Throwable("caller trace"))
         globalNetworkHandler.globalErrorHandler(
-            error = AppError.BusinessError(
-                errorModel = errorModel,
-                exception = Exception()
-            )
+            e.toSystemError()
         )
-        ResultWrapper.Error(
-            appError = AppError.BusinessError(
-                errorModel = errorModel,
-                exception = Exception()
-            )
-        )
-
-    }
-} catch (throwable : Throwable){
-            when (throwable) {
-                is UnknownHostException,
-                is SSLHandshakeException,
-                is SocketTimeoutException,
-                is SocketException -> {
-                    val error = ResultWrapper.Error(
-                        appError = AppError.SystemError(
-                            errorModel = ErrorModelDo(
-                                errorMessage = throwable.message,
-                                code = Integer.MAX_VALUE - 2,
-                                warnings = throwable.message
-                            ),
-                            exception = throwable
-                        )
-
-                    )
-                    globalNetworkHandler.globalErrorHandler(
-                        error = AppError.SystemError(
-                            errorModel = ErrorModelDo(
-                                errorMessage = throwable.message,
-                                code = Integer.MAX_VALUE - 2,
-                                warnings = throwable.message
-                            ),
-                            exception = throwable
-                        )
-                    )
-                    return error
-                }
-
-                is IOException -> {
-                    val error = ResultWrapper.Error(
-                        appError = AppError.SystemError(
-                            errorModel = ErrorModelDo(
-                                errorMessage = throwable.message,
-                                code = Integer.MAX_VALUE - 3,
-                                warnings = throwable.message
-                            ),
-                            exception = throwable
-                        )
-
-                    )
-                    globalNetworkHandler.globalErrorHandler(
-                        error = AppError.SystemError(
-                            errorModel = ErrorModelDo(
-                                errorMessage = throwable.message,
-                                code = Integer.MAX_VALUE - 2,
-                                warnings = throwable.message
-                            ),
-                            exception = throwable
-                        )
-                    )
-                    return error
-                }
-                else -> {
-                    val error = ResultWrapper.Error(
-                        appError = AppError.SystemError(
-                            errorModel = ErrorModelDo(
-                                errorMessage = SOMETHING_WENT_WRONG,
-                                code = Integer.MAX_VALUE,
-                                warnings = SOMETHING_WENT_WRONG
-                            ),
-                            exception = Exception(throwable.message, throwable)
-                        )
-
-                    )
-                    globalNetworkHandler.globalErrorHandler(
-                        error = AppError.SystemError(
-                            errorModel = ErrorModelDo(
-                                errorMessage = SOMETHING_WENT_WRONG,
-                                code = Integer.MAX_VALUE,
-                                warnings = SOMETHING_WENT_WRONG
-                            ),
-                            exception = Exception(throwable.message, throwable)
-                        )
-                    )
-                    return error
-                }
-            }
-
-        }
-
-
+        ResultWrapper.Error(e.toSystemError())
+   }
 }
-const val SOMETHING_WENT_WRONG = "Something went wrong"
-const val EMPTY_BODY = "The List is empty"
 

@@ -7,6 +7,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.navigation.compose.rememberNavController
+import com.example.core_data.handler.GlobalNetworkHandlerImpl
+import com.example.core_domain.handler.GlobalNetworkHandler
+import com.example.core_domain.useCases.HandleErrorUseCase
 import com.example.core_ui.NotificationPermissionHandler
 import com.example.musicapplication.ui.theme.MusicApplicationTheme
 import com.example.navigation.Navigator
@@ -20,6 +23,10 @@ class MainActivity : ComponentActivity() {
     lateinit var musicController: MusicController
 
     @Inject
+    lateinit var globalNetworkHandler: GlobalNetworkHandler
+    @Inject
+    lateinit var handleErrorUseCase: HandleErrorUseCase
+    @Inject
     lateinit var navigator: Navigator
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -31,6 +38,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
             NotificationPermissionHandler()
+            GlobalErrorHandler(
+                globalNetworkHandler,
+                handleErrorUseCase
+            )
             MusicApplicationTheme {
              App(navigator = navigator, navController = navController)
             }

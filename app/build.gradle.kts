@@ -53,5 +53,6 @@ dependencies {
     implementation(project(":feature-detail:api"))
     implementation(project(":feature-detail:impl"))
     implementation(project(":core-sync"))
+    implementation(project(":core-domain"))
     implementation(project(":service"))
 }
