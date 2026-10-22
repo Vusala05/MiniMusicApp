@@ -29,5 +29,7 @@ dependencies {
     implementation(project(":feature-download:api"))
     implementation(project(":service"))
     implementation(project(":core-sync"))
+    implementation(project(":navigation"))
+
 
 }

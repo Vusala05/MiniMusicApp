@@ -21,6 +21,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.example.navigation.Navigator
+import com.example.navigation.navigatorRoute
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
@@ -31,6 +33,7 @@ class DetailViewModel @Inject constructor(
     val controlDetailBottomComponentsUseCase: ControlDetailBottomComponentsUseCase,
     val downloadMusicUseCase: DownloadMusicUseCase,
     val deleteChosenMusicUseCase: DeleteChosenMusicUseCase,
+    val navigator: Navigator,
     val observeDownloadStatusUseCase: ObserveDownloadStatusUseCase
 ) : BaseViewModel<DetailContract.State, DetailContract.Effect>
     (initialState = DetailContract.State(),
@@ -62,7 +65,9 @@ class DetailViewModel @Inject constructor(
 
             }
             is DetailContract.Intent.OnBackClick -> {
-
+                  navigator.navigatorRoute {
+                      popBackStack()
+                  }
             }
             is DetailContract.Intent.OnDownloadClicked -> {
                 viewModelScope.launch {
