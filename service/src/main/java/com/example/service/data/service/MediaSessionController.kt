@@ -318,5 +318,4 @@ class MediaSessionController @Inject constructor(
     private fun<T : PlayableItem> List<T>.toMediaItems(): List<MediaItem> = this.map{ item ->
       item.toMediaItem()
     }
-
 }

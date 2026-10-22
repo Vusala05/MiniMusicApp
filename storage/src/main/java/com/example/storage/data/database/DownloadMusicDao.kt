@@ -23,5 +23,5 @@ interface DownloadMusicDao {
      suspend fun deleteDownloadedMusicInfo(id: String)
 
     @Query("DELETE FROM downloaded_musics WHERE id NOT IN (SELECT id FROM downloaded)")
-    suspend fun deleteAllUnfinishedMusicInfo()
+    suspend fun cleanAllUnfinishedMusicInfo()
 }

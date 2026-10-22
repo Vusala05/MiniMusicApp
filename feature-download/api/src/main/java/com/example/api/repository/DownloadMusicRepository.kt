@@ -10,6 +10,6 @@ interface DownloadMusicRepository {
     suspend fun getDownloadedMusicById(id: String) : TrackResponseDO?
 
     suspend fun deleteDownloadMusicById(id: String)
-    suspend fun deleteAllDownloadMusics()
+    suspend fun cleanOrphanMusicsInfo()
 
 }

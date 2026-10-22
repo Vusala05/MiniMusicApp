@@ -27,7 +27,7 @@ class DownloadMusicRepositoryImpl @Inject constructor(
         dao.deleteDownloadedMusicInfo(id)
     }
 
-    override suspend fun deleteAllDownloadMusics() {
-        dao.deleteAllUnfinishedMusicInfo()
+    override suspend fun cleanOrphanMusicsInfo() {
+        dao.cleanAllUnfinishedMusicInfo()
     }
 }

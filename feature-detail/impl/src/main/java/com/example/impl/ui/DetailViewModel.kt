@@ -96,7 +96,7 @@ class DetailViewModel @Inject constructor(
             }
         }
     }
-    //
+
      var loadingId : String? = null
     private fun loadMusicDetail(id : String){
         if (loadingId == id ) return
